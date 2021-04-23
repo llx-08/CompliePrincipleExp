@@ -53,7 +53,7 @@ vector<pair<string, int>> keyword = {
 };
 
 // 运算符
-string operatorChar = "+-*/=><&|~!";
+string operatorChar = "+-*/=><&|~!%";
 
 // 分界符
 string delimiters   = "()[]{}#,;'\"";

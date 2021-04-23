@@ -3,4 +3,4 @@ project(byyl_exp1)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(byyl_exp1_v1 main.cpp lex_analysis.h)
+add_executable(byyl_exp1_v1 main.cpp main.h)

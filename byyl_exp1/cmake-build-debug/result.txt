@@ -1,101 +1,47 @@
+(#, delimiters)
+( include, Identifier )
+( <, Operator )
+( stdio.h, Identifier )
+( >, Operator )
 ( int,1 )
-( num1, Identifier )
-(,, delimiters)
-( num2, Identifier )
-(,, delimiters)
-( op, Identifier )
-(,, delimiters)
-( ans, Identifier )
-(;, delimiters)
-( get, Identifier )
+( main, Identifier )
 ((, delimiters)
-( num1, Identifier )
-(,, delimiters)
-( num2, Identifier )
-(,, delimiters)
-( op, Identifier )
+(), delimiters)
+({, delimiters)
+( printf,4 )
+((, delimiters)
+(", delimiters)
+( Hello, Identifier )
+( World, Identifier )
+(", delimiters)
 (), delimiters)
 (;, delimiters)
-( if,3 )
-((, delimiters)
-( op, Identifier )
-( ==, Operator )
+( return,5 )
 ( 0, Int Digit )
-(), delimiters)
-({, delimiters)
-( ans, Identifier )
-( =, Operator )
-( num1, Identifier )
-( +, Operator )
-( num2, Identifier )
 (;, delimiters)
 (}, delimiters)
-(;, delimiters)
-( if,3 )
-((, delimiters)
-( op, Identifier )
-( ==, Operator )
-( 1, Int Digit )
-(), delimiters)
-({, delimiters)
-( ans, Identifier )
-( =, Operator )
-( num1, Identifier )
-( -, Operator )
-( num2, Identifier )
-(;, delimiters)
-(}, delimiters)
-(;, delimiters)
-( if,3 )
-((, delimiters)
-( op, Identifier )
-( ==, Operator )
-( 2, Int Digit )
-(), delimiters)
-({, delimiters)
-( ans, Identifier )
-( =, Operator )
-( num1, Identifier )
-( &, Operator )
-( num2, Identifier )
-(;, delimiters)
-(}, delimiters)
-(;, delimiters)
-( if,3 )
-((, delimiters)
-( op, Identifier )
-( ==, Operator )
-( 3, Int Digit )
-(), delimiters)
-({, delimiters)
-( ans, Identifier )
-( =, Operator )
-( num1, Identifier )
-( |, Operator )
-( num2, Identifier )
-(;, delimiters)
-(}, delimiters)
-(;, delimiters)
-( put, Identifier )
-((, delimiters)
-( ans, Identifier )
-(), delimiters)
-(;, delimiters)
 
-====================================Statistics Data====================================Total Lines: 19
-Total Words: 83
-Total characters: 184
+====================================Statistics Data====================================
+Total Lines: 9
+Total Words: 22
+Total characters: 67
 Total Errors: 0
 ====================================Each Word Count====================================
-Word: 3 Count: 1
-Word: num2 Count: 6
-Word: put Count: 1
-Word: int Count: 1
-Word: num1 Count: 6
-Word: op Count: 6
-Word: ans Count: 6
+Word: } Count: 1
+Word: return Count: 1
+Word: ; Count: 2
+Word: Hello Count: 1
+Word: " Count: 2
 Word: 0 Count: 1
-Word: get Count: 1
-Word: if Count: 4
-Word: 1 Count: 1
-Word: 2 Count: 1
+Word: printf Count: 1
+Word: main Count: 1
+Word: include Count: 1
+Word: World Count: 1
+Word: < Count: 1
+Word: stdio.h Count: 1
+Word: > Count: 1
+Word: { Count: 1
+Word: # Count: 1
+Word: int Count: 1
+Word: ) Count: 2
+Word: ( Count: 2

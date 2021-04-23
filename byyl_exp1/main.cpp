@@ -50,6 +50,8 @@ pair<int, int> checkIfDigit(string str){
 }
 
 bool judge(string str, int line_count){// 判断是否为数字/标识符/关键字
+    if (str.empty())
+        return true;
 
     for (auto & i : keyword) {
         if (str == i.first){
@@ -93,10 +95,10 @@ bool judge(string str, int line_count){// 判断是否为数字/标识符/关键
 
         } else if (p_temp.first == 1 and p_temp.second == 0){
             cout << "Error Occurred At Line " << line_count << endl;
-            outFile << "( " << str <<", Error Digit )" <<endl;
+            outFile << "( " << str <<", Error: Invalid Digit )" <<endl;
         } else if (p_temp.first == 1 and p_temp.second == 1){
             cout << "Error Occurred At Line " << line_count << endl;
-            outFile << "( " << str <<", Error Float Digit )" <<endl;
+            outFile << "( " << str <<", Error: Invalid Float Digit )" <<endl;
         } else {
             outFile << "( " << str <<", Float Digit )" <<endl;
 
@@ -133,14 +135,14 @@ int main() {
 
     string test_str;
 
-    int line_count = 0;// 统计行数
+    int line_count = 1;// 统计行数
     int word_count = 0;// 统计单词数
     int char_count = 0;// 统计字符数
     int err_count  = 0;// 统计错误数
 
     while (getline(inputFile, test_str)){
 
-        cout<<test_str<<endl;
+//        cout<<test_str<<endl;
 
         int curr = 0;
 
@@ -156,12 +158,16 @@ int main() {
                     word_count++;
                     outFile << "(" << test_str[curr] <<", delimiters)" <<endl;
 
-//                    string temp = reinterpret_cast<const char *>(test_str[curr]);
-//                    if (chara_mp.find(temp)!=chara_mp.end()){// exist
-//                        chara_mp[temp] += 1;
-//                    } else {//not exist
-//                        chara_mp[temp] = 1;
-//                    }
+                    char tempArray[2];
+                    tempArray[0] = test_str[curr];
+                    tempArray[1] = '\0';
+                    string temp = tempArray;
+
+                    if (chara_mp.find(temp)!=chara_mp.end()){// exist
+                        chara_mp[temp] += 1;
+                    } else {//not exist
+                        chara_mp[temp] = 1;
+                    }
 
                     state = -1;//本次读取终结状态
                     break;
@@ -198,26 +204,33 @@ int main() {
                                 ){
                             outFile<<"( "<<test_str[curr]<<test_str[curr+1]<<", Operator )"<<endl;
 
-//                            string temp = reinterpret_cast<const char *>(test_str[curr] + test_str[curr + 1]);
-//
-//                            if (chara_mp.find(temp)!=chara_mp.end()){// exist
-//                                chara_mp[temp] += 1;
-//                            } else {//not exist
-//                                chara_mp[temp] = 1;
-//                            }
+                            char tempArray[3];
+                            tempArray[0] = test_str[curr];
+                            tempArray[1] = test_str[curr+1];
+                            tempArray[2] = '\0';
+                            string temp = tempArray;
+                            if (chara_mp.find(temp)!=chara_mp.end()){// exist
+                                chara_mp[temp] += 1;
+                            } else {//not exist
+                                chara_mp[temp] = 1;
+                            }
                         } else {
-                            outFile<<"( "<<test_str[curr]+test_str[curr+1]<<", Error:Invalid Operator )"<<endl;
+                            cout<<"Error Occurred At Line "<<line_count<<endl;
+                            outFile<<"( "<<test_str[curr]<<test_str[curr+1]<<", Error:Invalid Operator )"<<endl;
                         }
 
                         curr++;
                     } else {
                         outFile<<"( "<<test_str[curr]<<", Operator )"<<endl;
-//                        string temp = reinterpret_cast<const char *>(test_str[curr]);
-//                        if (chara_mp.find(temp)!=chara_mp.end()){// exist
-//                            chara_mp[temp] += 1;
-//                        } else {//not exist
-//                            chara_mp[temp] = 1;
-//                        }
+                        char tempArray[2];
+                        tempArray[0] = test_str[curr];
+                        tempArray[1] = '\0';
+                        string temp = tempArray;
+                        if (chara_mp.find(temp)!=chara_mp.end()){// exist
+                            chara_mp[temp] += 1;
+                        } else {//not exist
+                            chara_mp[temp] = 1;
+                        }
                     }
                     word_count++;
                     break;
@@ -240,6 +253,8 @@ int main() {
 
             bool flag = judge(temp, line_count);
 
+//            cout<<"?"<<endl;
+
             if (flag == false){
 //                cout<<test_str[curr]<<" ???"<<endl;
                 err_count++;
@@ -253,7 +268,7 @@ int main() {
     }
 
     // 统计结果
-    outFile << endl << "====================================Statistics Data====================================";
+    outFile << endl << "====================================Statistics Data====================================\n";
     outFile << "Total Lines: " << line_count <<endl;
     outFile << "Total Words: " << word_count << endl;
     outFile << "Total characters: " << char_count << endl;
