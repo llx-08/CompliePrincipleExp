@@ -58,19 +58,19 @@ cmake_force:
 SHELL = cmd.exe
 
 # The CMake executable.
-CMAKE_COMMAND = C:\Users\llxnb\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\203.7717.62\bin\cmake\win\bin\cmake.exe
+CMAKE_COMMAND = C:\Users\llxpo\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\203.7148.70\bin\cmake\win\bin\cmake.exe
 
 # The command to remove a file.
-RM = C:\Users\llxnb\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\203.7717.62\bin\cmake\win\bin\cmake.exe -E rm -f
+RM = C:\Users\llxpo\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\203.7148.70\bin\cmake\win\bin\cmake.exe -E rm -f
 
 # Escaping for special characters.
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = C:\Users\llxnb\CLionProjects\byyl_exp1_v1\byyl_exp1
+CMAKE_SOURCE_DIR = D:\GITHUB\byyl
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = C:\Users\llxnb\CLionProjects\byyl_exp1_v1\byyl_exp1\cmake-build-debug
+CMAKE_BINARY_DIR = D:\GITHUB\byyl\cmake-build-debug
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -78,7 +78,7 @@ CMAKE_BINARY_DIR = C:\Users\llxnb\CLionProjects\byyl_exp1_v1\byyl_exp1\cmake-bui
 # Special rule for the target edit_cache
 edit_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
-	C:\Users\llxnb\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\203.7717.62\bin\cmake\win\bin\cmake.exe -E echo "No interactive CMake dialog available."
+	C:\Users\llxpo\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\203.7148.70\bin\cmake\win\bin\cmake.exe -E echo "No interactive CMake dialog available."
 .PHONY : edit_cache
 
 # Special rule for the target edit_cache
@@ -89,7 +89,7 @@ edit_cache/fast: edit_cache
 # Special rule for the target rebuild_cache
 rebuild_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
-	C:\Users\llxnb\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\203.7717.62\bin\cmake\win\bin\cmake.exe --regenerate-during-build -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+	C:\Users\llxpo\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\203.7148.70\bin\cmake\win\bin\cmake.exe --regenerate-during-build -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
 .PHONY : rebuild_cache
 
 # Special rule for the target rebuild_cache
@@ -99,9 +99,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\llxnb\CLionProjects\byyl_exp1_v1\byyl_exp1\cmake-build-debug\CMakeFiles C:\Users\llxnb\CLionProjects\byyl_exp1_v1\byyl_exp1\cmake-build-debug\CMakeFiles\progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start D:\GITHUB\byyl\cmake-build-debug\CMakeFiles D:\GITHUB\byyl\cmake-build-debug\CMakeFiles\progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\llxnb\CLionProjects\byyl_exp1_v1\byyl_exp1\cmake-build-debug\CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start D:\GITHUB\byyl\cmake-build-debug\CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -130,17 +130,17 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named byyl_exp1_v1
+# Target rules for targets named byyl
 
 # Build rule for target.
-byyl_exp1_v1: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 byyl_exp1_v1
-.PHONY : byyl_exp1_v1
+byyl: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 byyl
+.PHONY : byyl
 
 # fast build rule for target.
-byyl_exp1_v1/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\byyl_exp1_v1.dir\build.make CMakeFiles/byyl_exp1_v1.dir/build
-.PHONY : byyl_exp1_v1/fast
+byyl/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\byyl.dir\build.make CMakeFiles/byyl.dir/build
+.PHONY : byyl/fast
 
 main.obj: main.cpp.obj
 
@@ -148,7 +148,7 @@ main.obj: main.cpp.obj
 
 # target to build an object file
 main.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\byyl_exp1_v1.dir\build.make CMakeFiles/byyl_exp1_v1.dir/main.cpp.obj
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\byyl.dir\build.make CMakeFiles/byyl.dir/main.cpp.obj
 .PHONY : main.cpp.obj
 
 main.i: main.cpp.i
@@ -157,7 +157,7 @@ main.i: main.cpp.i
 
 # target to preprocess a source file
 main.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\byyl_exp1_v1.dir\build.make CMakeFiles/byyl_exp1_v1.dir/main.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\byyl.dir\build.make CMakeFiles/byyl.dir/main.cpp.i
 .PHONY : main.cpp.i
 
 main.s: main.cpp.s
@@ -166,7 +166,7 @@ main.s: main.cpp.s
 
 # target to generate assembly for a file
 main.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\byyl_exp1_v1.dir\build.make CMakeFiles/byyl_exp1_v1.dir/main.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\byyl.dir\build.make CMakeFiles/byyl.dir/main.cpp.s
 .PHONY : main.cpp.s
 
 # Help Target
@@ -177,7 +177,7 @@ help:
 	@echo ... depend
 	@echo ... edit_cache
 	@echo ... rebuild_cache
-	@echo ... byyl_exp1_v1
+	@echo ... byyl
 	@echo ... main.obj
 	@echo ... main.i
 	@echo ... main.s

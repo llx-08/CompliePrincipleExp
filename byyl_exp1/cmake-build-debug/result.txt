@@ -1,30 +1,32 @@
-(#, delimiters)
-( include, Identifier )
-( <, Operator )
-( stdio.h, Identifier )
-( >, Operator )
-( int,1 )
-( main, Identifier )
-((, delimiters)
-(), delimiters)
-({, delimiters)
-( printf,4 )
-((, delimiters)
-(", delimiters)
-( Hello, Identifier )
-( World, Identifier )
-(", delimiters)
-(), delimiters)
-(;, delimiters)
-( return,5 )
-( 0, Int Digit )
-(;, delimiters)
-(}, delimiters)
+(#, 62)
+( include, 71 )
+( <, 40 )
+( stdio.h, 71 )
+( >, 39 )
+( int, 2 )
+( main, 71 )
+((, 56)
+(), 57)
+({, 60)
+( printf, 30 )
+((, 56)
+(", 66)
+( Hello, 71 )
+( World, 71 )
+(", 66)
+(), 57)
+(;, 64)
+( int, 2 )
+( _dawdwaf, 71 )
+( return, 32 )
+( 0, 68 )
+(;, 64)
+(}, 61)
 
 ====================================Statistics Data====================================
-Total Lines: 9
-Total Words: 22
-Total characters: 67
+Total Lines: 10
+Total Words: 24
+Total characters: 85
 Total Errors: 0
 ====================================Each Word Count====================================
 Word: } Count: 1
@@ -40,8 +42,9 @@ Word: World Count: 1
 Word: < Count: 1
 Word: stdio.h Count: 1
 Word: > Count: 1
+Word: _daw...dwaf Count: 1
 Word: { Count: 1
 Word: # Count: 1
-Word: int Count: 1
+Word: int Count: 2
 Word: ) Count: 2
 Word: ( Count: 2

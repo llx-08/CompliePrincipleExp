@@ -210,7 +210,6 @@ int main() {
                             outFile <<", 67)" <<endl;
                             break;
                         }
-                        default: outFile
                     }
 
                     char tempArray[2];
