@@ -186,32 +186,28 @@ int main() {
                             outFile <<", 61)" <<endl;
                             break;
                         }
-                        case '[' : {
+                        case '#' : {
                             outFile <<", 62)" <<endl;
                             break;
                         }
-                        case '#' : {
+                        case ',' : {
                             outFile <<", 63)" <<endl;
                             break;
                         }
-                        case ',' : {
+                        case ';' : {
                             outFile <<", 64)" <<endl;
                             break;
                         }
-                        case ';' : {
+                        case '\'': {
                             outFile <<", 65)" <<endl;
                             break;
                         }
-                        case '\'': {
+                        case '"' : {
                             outFile <<", 66)" <<endl;
                             break;
                         }
-                        case '"' : {
-                            outFile <<", 67)" <<endl;
-                            break;
-                        }
                         case ':' : {
-                            outFile <<", 68)" <<endl;
+                            outFile <<", 67)" <<endl;
                             break;
                         }
                         default: outFile
@@ -276,57 +272,31 @@ int main() {
 
                             outFile<<"( "<<temp;
 
-                            switch (temp) {// 两个字符的运算符
-                                case "++":{
-                                    outFile<<", 45 )"<<endl;
-                                    break;
-                                }
-                                case "--":{
-                                    outFile<<", 46 )"<<endl;
-                                    break;
-                                }
-                                case "**":{
-                                    outFile<<", 47 )"<<endl;
-                                    break;
-                                }
-                                case "+=":{
-                                    outFile<<", 48 )"<<endl;
-                                    break;
-                                }
-                                case "-=":{
-                                    outFile<<", 49 )"<<endl;
-                                    break;
-                                }
-                                case "*=":{
-                                    outFile<<", 50 )"<<endl;
-                                    break;
-                                }
-                                case "/=":{
-                                    outFile<<", 51 )"<<endl;
-                                    break;
-                                }
-                                case "==":{
-                                    outFile<<", 52 )"<<endl;
-                                    break;
-                                }
-                                case ">=":{
-                                    outFile<<", 52 )"<<endl;
-                                    break;
-                                }
-                                case "<=":{
-                                    outFile<<", 52 )"<<endl;
-                                    break;
-                                }
-                                case "!=":{
-                                    outFile<<", 52 )"<<endl;
-                                    break;
-                                }
-
-                                default:{
-                                    cout<<"Error Occurred At Line "<<line_count<<endl;
-                                    outFile<", Error:Invalid Operator )"<<endl;
-                                }
-
+                            if (temp == "++") {// 两个字符的运算符
+                                outFile<<", 45 )"<<endl;
+                            } else if (temp == "--"){
+                                outFile<<", 46 )"<<endl;
+                            } else if (temp == "**"){
+                                outFile<<", 47 )"<<endl;
+                            } else if (temp == "+="){
+                                outFile<<", 48 )"<<endl;
+                            } else if (temp == "-="){
+                                outFile<<", 49 )"<<endl;
+                            } else if (temp == "*="){
+                                outFile<<", 50 )"<<endl;
+                            } else if (temp == "/="){
+                                outFile<<", 51 )"<<endl;
+                            } else if (temp == "=="){
+                                outFile<<", 52 )"<<endl;
+                            } else if (temp == ">="){
+                                outFile<<", 52 )"<<endl;
+                            } else if (temp == "<="){
+                                outFile<<", 52 )"<<endl;
+                            } else if(temp == "!="){
+                                outFile<<", 52 )"<<endl;
+                            } else{
+                                cout<<"Error Occurred At Line "<<line_count<<endl;
+                                outFile<<", Error:Invalid Operator )"<<endl;
                             }
 
                         } else {
@@ -348,48 +318,48 @@ int main() {
                             chara_mp[temp] = 1;
                         }
 
-                        switch (temp) {
-                            case "+":{
+                        switch (test_str[curr]) {
+                            case '+':{
                                 outFile<<", 34 )"<<endl;
                                 break;
                             }
-                            case "-":{
+                            case '-':{
                                 outFile<<", 35 )"<<endl;
                                 break;
                             }
-                            case "*":{
+                            case '*':{
                                 outFile<<", 36 )"<<endl;
                                 break;
                             }
-                            case "/":{
+                            case '/':{
                                 outFile<<", 37 )"<<endl;
                                 break;
                             }
-                            case "=":{
+                            case '=':{
                                 outFile<<", 38 )"<<endl;
                                 break;
                             }
-                            case ">":{
+                            case '>':{
                                 outFile<<", 39 )"<<endl;
                                 break;
                             }
-                            case "<":{
+                            case '<':{
                                 outFile<<", 40 )"<<endl;
                                 break;
                             }
-                            case "&":{
+                            case '&':{
                                 outFile<<", 41 )"<<endl;
                                 break;
                             }
-                            case "|":{
+                            case '|':{
                                 outFile<<", 42 )"<<endl;
                                 break;
                             }
-                            case "!":{
+                            case '!':{
                                 outFile<<", 43 )"<<endl;
                                 break;
                             }
-                            case "%":{
+                            case '%':{
                                 outFile<<", 44 )"<<endl;
                                 break;
                             }
