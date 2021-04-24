@@ -10,46 +10,50 @@ using namespace std;
 vector<pair<string, int>> keyword = {
         // 声明变量
         {"auto"    , 1},
-        {"int"     , 1},
-        {"double"  , 1},
-        {"float"   , 1},
-        {"char"    , 1},
-        {"string"  , 1},
-        {"long"    , 1},
-        {"struct"  , 1},
-        {"register", 1},
-        {"typedef" , 1},
-        {"short"   , 1},
-        {"union"   , 1},
+        {"int"     , 2},
+        {"double"  , 3},
+        {"float"   , 4},
+        {"char"    , 5},
+        {"string"  , 6},
+        {"long"    , 7},
+        {"struct"  , 8},
+        {"register", 9},
+        {"typedef" , 10},
+        {"short"   , 11},
+        {"union"   , 12},
 
         // 限定、修饰符号
-        {"const"   , 2},
-        {"unsigned", 2},
-        {"signed"  , 2},
-        {"static"  , 2},
-        {"extern"  , 2},
+        {"const"   , 13},
+        {"unsigned", 14},
+        {"signed"  , 15},
+        {"static"  , 16},
+        {"extern"  , 17},
 
         // 循环，分支语句
-        {"for"     , 3},
-        {"while"   , 3},
-        {"switch"  , 3},
-        {"case"    , 3},
-        {"goto"    , 3},
-        {"if"      , 3},
-        {"else"    , 3},
-        {"continue", 3},
-        {"break"   , 3},
-        {"do"      , 3},
-        {"default" , 3},
+        {"for"     , 18},
+        {"while"   , 19},
+        {"switch"  , 20},
+        {"case"    , 21},
+        {"goto"    , 22},
+        {"if"      , 23},
+        {"else"    , 24},
+        {"continue", 25},
+        {"break"   , 26},
+        {"do"      , 27},
+        {"default" , 28},
 
         // 输入，输出
-        {"scanf"   , 4},
-        {"printf"  , 4},
+        {"scanf"   , 29},
+        {"printf"  , 30},
 
         //函数类别
-        {"void"    , 5},
-        {"return"  , 5},
-        {"volatile", 5}
+        {"void"    , 31},
+        {"return"  , 32},
+        {"volatile", 33},
+
+        // 布尔常量
+        {"true"    , 70},
+        {"false"   , 70}
 };
 
 // 运算符

@@ -55,7 +55,7 @@ bool judge(string str, int line_count){// 判断是否为数字/标识符/关键
 
     for (auto & i : keyword) {
         if (str == i.first){
-            outFile <<"( "<<str<<","<<i.second<<" )"<<endl;
+            outFile <<"( "<<str<<", "<<i.second<<" )"<<endl;
 
             if (chara_mp.find(str)!=chara_mp.end()){// exist
                 chara_mp[str] += 1;
@@ -67,8 +67,7 @@ bool judge(string str, int line_count){// 判断是否为数字/标识符/关键
         }
     }
 
-    if ((str[0] < '0' or str[0] > '9')
-        or (str[0] >= 'a' and str[0] <= 'z')
+    if ((str[0] >= 'a' and str[0] <= 'z')
         or (str[0] >= 'A' and str[0] <= 'Z')
         or str[0] == '_'){//标识符
 
@@ -78,14 +77,14 @@ bool judge(string str, int line_count){// 判断是否为数字/标识符/关键
             chara_mp[str] = 1;
         }
 
-        outFile << "( " << str <<", Identifier )" <<endl;
+        outFile << "( " << str <<", 71 )" <<endl;
         return true;
 
-    } else { // 数字开头
+    } else if (str[0] >= '0' and str[0] <= '9') { // 数字开头
         pair<int, int> p_temp = checkIfDigit(str);
         if        (p_temp.first == 0 and p_temp.second == 0){
 
-            outFile << "( " << str <<", Int Digit )" <<endl;
+            outFile << "( " << str <<", 68 )" <<endl;
 
             if (chara_mp.find(str)!=chara_mp.end()){// exist
                 chara_mp[str] += 1;
@@ -100,7 +99,7 @@ bool judge(string str, int line_count){// 判断是否为数字/标识符/关键
             cout << "Error Occurred At Line " << line_count << endl;
             outFile << "( " << str <<", Error: Invalid Float Digit )" <<endl;
         } else {
-            outFile << "( " << str <<", Float Digit )" <<endl;
+            outFile << "( " << str <<", 69 )" <<endl;
 
             if (chara_mp.find(str)!=chara_mp.end()){// exist
                 chara_mp[str] += 1;
@@ -114,6 +113,10 @@ bool judge(string str, int line_count){// 判断是否为数字/标识符/关键
             return false;
 
         return true;
+    } else {
+        cout << "Error Occurred At Line " << line_count << endl;
+        outFile << "( " << str <<", Error: Invalid Identifier )" <<endl;
+        return false;
     }
 
 //    cout << flag << endl;
@@ -156,7 +159,63 @@ int main() {
             for (char c : delimiters) {
                 if (test_str[curr] == c){
                     word_count++;
-                    outFile << "(" << test_str[curr] <<", delimiters)" <<endl;
+                    outFile << "(" << test_str[curr];
+
+                    switch (c) {
+                        case '(' : {
+                            outFile <<", 56)" <<endl;
+                            break;
+                        }
+                        case ')' : {
+                            outFile <<", 57)" <<endl;
+                            break;
+                        }
+                        case '[' : {
+                            outFile <<", 58)" <<endl;
+                            break;
+                        }
+                        case ']' : {
+                            outFile <<", 59)" <<endl;
+                            break;
+                        }
+                        case '{' : {
+                            outFile <<", 60)" <<endl;
+                            break;
+                        }
+                        case '}' : {
+                            outFile <<", 61)" <<endl;
+                            break;
+                        }
+                        case '[' : {
+                            outFile <<", 62)" <<endl;
+                            break;
+                        }
+                        case '#' : {
+                            outFile <<", 63)" <<endl;
+                            break;
+                        }
+                        case ',' : {
+                            outFile <<", 64)" <<endl;
+                            break;
+                        }
+                        case ';' : {
+                            outFile <<", 65)" <<endl;
+                            break;
+                        }
+                        case '\'': {
+                            outFile <<", 66)" <<endl;
+                            break;
+                        }
+                        case '"' : {
+                            outFile <<", 67)" <<endl;
+                            break;
+                        }
+                        case ':' : {
+                            outFile <<", 68)" <<endl;
+                            break;
+                        }
+                        default: outFile
+                    }
 
                     char tempArray[2];
                     tempArray[0] = test_str[curr];
@@ -202,18 +261,74 @@ int main() {
                                 (test_str[curr] == '&' and test_str[curr+1] == test_str[curr]) or // &&
                                 (test_str[curr] == '|' and test_str[curr+1] == test_str[curr])    // ||
                                 ){
-                            outFile<<"( "<<test_str[curr]<<test_str[curr+1]<<", Operator )"<<endl;
 
                             char tempArray[3];
                             tempArray[0] = test_str[curr];
                             tempArray[1] = test_str[curr+1];
                             tempArray[2] = '\0';
                             string temp = tempArray;
+
                             if (chara_mp.find(temp)!=chara_mp.end()){// exist
                                 chara_mp[temp] += 1;
                             } else {//not exist
                                 chara_mp[temp] = 1;
                             }
+
+                            outFile<<"( "<<temp;
+
+                            switch (temp) {// 两个字符的运算符
+                                case "++":{
+                                    outFile<<", 45 )"<<endl;
+                                    break;
+                                }
+                                case "--":{
+                                    outFile<<", 46 )"<<endl;
+                                    break;
+                                }
+                                case "**":{
+                                    outFile<<", 47 )"<<endl;
+                                    break;
+                                }
+                                case "+=":{
+                                    outFile<<", 48 )"<<endl;
+                                    break;
+                                }
+                                case "-=":{
+                                    outFile<<", 49 )"<<endl;
+                                    break;
+                                }
+                                case "*=":{
+                                    outFile<<", 50 )"<<endl;
+                                    break;
+                                }
+                                case "/=":{
+                                    outFile<<", 51 )"<<endl;
+                                    break;
+                                }
+                                case "==":{
+                                    outFile<<", 52 )"<<endl;
+                                    break;
+                                }
+                                case ">=":{
+                                    outFile<<", 52 )"<<endl;
+                                    break;
+                                }
+                                case "<=":{
+                                    outFile<<", 52 )"<<endl;
+                                    break;
+                                }
+                                case "!=":{
+                                    outFile<<", 52 )"<<endl;
+                                    break;
+                                }
+
+                                default:{
+                                    cout<<"Error Occurred At Line "<<line_count<<endl;
+                                    outFile<", Error:Invalid Operator )"<<endl;
+                                }
+
+                            }
+
                         } else {
                             cout<<"Error Occurred At Line "<<line_count<<endl;
                             outFile<<"( "<<test_str[curr]<<test_str[curr+1]<<", Error:Invalid Operator )"<<endl;
@@ -221,7 +336,8 @@ int main() {
 
                         curr++;
                     } else {
-                        outFile<<"( "<<test_str[curr]<<", Operator )"<<endl;
+                        outFile<<"( "<<test_str[curr];
+
                         char tempArray[2];
                         tempArray[0] = test_str[curr];
                         tempArray[1] = '\0';
@@ -230,6 +346,58 @@ int main() {
                             chara_mp[temp] += 1;
                         } else {//not exist
                             chara_mp[temp] = 1;
+                        }
+
+                        switch (temp) {
+                            case "+":{
+                                outFile<<", 34 )"<<endl;
+                                break;
+                            }
+                            case "-":{
+                                outFile<<", 35 )"<<endl;
+                                break;
+                            }
+                            case "*":{
+                                outFile<<", 36 )"<<endl;
+                                break;
+                            }
+                            case "/":{
+                                outFile<<", 37 )"<<endl;
+                                break;
+                            }
+                            case "=":{
+                                outFile<<", 38 )"<<endl;
+                                break;
+                            }
+                            case ">":{
+                                outFile<<", 39 )"<<endl;
+                                break;
+                            }
+                            case "<":{
+                                outFile<<", 40 )"<<endl;
+                                break;
+                            }
+                            case "&":{
+                                outFile<<", 41 )"<<endl;
+                                break;
+                            }
+                            case "|":{
+                                outFile<<", 42 )"<<endl;
+                                break;
+                            }
+                            case "!":{
+                                outFile<<", 43 )"<<endl;
+                                break;
+                            }
+                            case "%":{
+                                outFile<<", 44 )"<<endl;
+                                break;
+                            }
+
+                            default:{
+                                cout<<"Error Occurred At Line "<<line_count<<endl;
+                                outFile<<"( "<<test_str[curr]<<test_str[curr+1]<<", Error:Invalid Operator )"<<endl;
+                            }
                         }
                     }
                     word_count++;
