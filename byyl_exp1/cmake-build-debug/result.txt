@@ -1,50 +1,202 @@
-(#, 62)
-( include, 71 )
-( <, 40 )
-( stdio.h, 71 )
-( >, 39 )
-( int, 2 )
-( main, 71 )
-((, 56)
-(), 57)
-({, 60)
-( printf, 30 )
-((, 56)
-(", 66)
-( Hello, 71 )
-( World, 71 )
-(", 66)
-(), 57)
-(;, 64)
-( int, 2 )
-( _dawdwaf, 71 )
-( return, 32 )
-( 0, 68 )
-(;, 64)
-(}, 61)
+( 62, - )
+( 71, 1 )
+( 40, - )
+( 71, 2 )
+( 39, - )
+( 2, - )
+( 71, 3 )
+( 56, - )
+( 57, - )
+( 60, - )
+( 2, - )
+( 71, 4 )
+( 63, - )
+( 71, 5 )
+( 63, - )
+( 71, 6 )
+( 63, - )
+( 71, 7 )
+( 64, - )
+( 29, - )
+( 56, - )
+( 66, - )
+( 44, - )
+( 71, 8 )
+( 44, - )
+( 71, 9 )
+( 44, - )
+( 71, 10 )
+( 66, - )
+( 63, - )
+( 71, 11 )
+( 63, - )
+( 71, 12 )
+( 63, - )
+( 71, 13 )
+( 57, - )
+( 64, - )
+( 23, - )
+( 56, - )
+( 71, 14 )
+( 52, - )
+( 68, 1 )
+( 57, - )
+( 60, - )
+( 71, 15 )
+( 38, - )
+( 71, 16 )
+( 34, - )
+( 71, 17 )
+( 64, - )
+( 71, 18 )
+( 45, - )
+( 64, - )
+( 61, - )
+( 64, - )
+( 23, - )
+( 56, - )
+( 71, 19 )
+( 52, - )
+( 68, 2 )
+( 57, - )
+( 60, - )
+( 71, 20 )
+( 38, - )
+( 71, 21 )
+( 35, - )
+( 71, 22 )
+( 64, - )
+( 71, 23 )
+( 46, - )
+( 64, - )
+( 61, - )
+( 64, - )
+( 23, - )
+( 56, - )
+( 71, 24 )
+( 52, - )
+( 68, 3 )
+( 57, - )
+( 60, - )
+( 71, 25 )
+( 38, - )
+( 71, 26 )
+( 41, - )
+( 71, 27 )
+( 64, - )
+( 71, 28 )
+( ( -3 , 1 )
+, - )
+( 68, 4 )
+( 64, - )
+( 61, - )
+( 64, - )
+( 23, - )
+( 56, - )
+( 71, 29 )
+( 52, - )
+( 68, 5 )
+( 57, - )
+( 60, - )
+( 71, 30 )
+( 38, - )
+( 71, 31 )
+( 42, - )
+( 71, 32 )
+( 64, - )
+( 71, 33 )
+( -3 , 2 )
+( 68, 6 )
+( 64, - )
+( 71, 34 )
+( -3 , 3 )
+( 68, 7 )
+( 64, - )
+( 71, 35 )
+( 38, - )
+( 71, 36 )
+( 47, - )
+( 68, 8 )
+( 64, - )
+( 61, - )
+( 64, - )
+( 3, - )
+( 71, 37 )
+( 38, - )
+( 69, 9 )
+( 64, - )
+( 3, - )
+( 71, 38 )
+( 38, - )
+( -2, 4 )
+( 64, - )
+( 3, - )
+( -1, 5 )
+( 38, - )
+( 69, 10 )
+( 64, - )
+( 30, - )
+( 56, - )
+( 66, - )
+( 71, 39 )
+( 38, - )
+( 44, - )
+( 71, 40 )
+( 66, - )
+( 63, - )
+( 71, 41 )
+( 57, - )
+( 64, - )
+( 61, - )
 
 ====================================Statistics Data====================================
-Total Lines: 10
-Total Words: 24
-Total characters: 85
-Total Errors: 0
+Total Lines: 34
+Total Words: 149
+Total characters: 501
+Total Errors: 5
 ====================================Each Word Count====================================
-Word: } Count: 1
-Word: return Count: 1
-Word: ; Count: 2
-Word: Hello Count: 1
-Word: " Count: 2
+Word: 0x12.34abc Count: 1
+Word: f Count: 1
+Word: | Count: 1
+Word: 10 Count: 2
+Word: & Count: 1
+Word: 2 Count: 2
+Word: - Count: 1
+Word: } Count: 5
+Word: ++ Count: 1
 Word: 0 Count: 1
-Word: printf Count: 1
-Word: main Count: 1
-Word: include Count: 1
-Word: World Count: 1
-Word: < Count: 1
-Word: stdio.h Count: 1
-Word: > Count: 1
-Word: _daw...dwaf Count: 1
-Word: { Count: 1
-Word: # Count: 1
+Word: double Count: 3
+Word: ( Count: 7
+Word: result Count: 1
+Word: ) Count: 7
+Word: ** Count: 1
 Word: int Count: 2
-Word: ) Count: 2
-Word: ( Count: 2
+Word: num1 Count: 6
+Word: printf Count: 1
+Word: # Count: 1
+Word: { Count: 5
+Word: f_err Count: 1
+Word: > Count: 1
+Word: op Count: 6
+Word: %= Count: 1
+Word: stdio.h Count: 1
+Word: 0.001 Count: 1
+Word: if Count: 4
+Word: include Count: 1
+Word: 3 Count: 1
+Word: main Count: 1
+Word: 15 Count: 1
+Word: = Count: 9
+Word: ans Count: 13
+Word: -- Count: 1
+Word: num2 Count: 6
+Word: == Count: 4
+Word: ; Count: 20
+Word: + Count: 1
+Word: scanf Count: 1
+Word: 1 Count: 1
+Word: < Count: 1
+Word: d Count: 4
+Word: " Count: 4
+Word: , Count: 7
+Word: % Count: 4

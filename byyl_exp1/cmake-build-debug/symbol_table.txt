@@ -1,0 +1,62 @@
+Const Table:
+1 0: Code: 68
+2 1: Code: 68
+3 2: Code: 68
+4 10: Code: 68
+5 3: Code: 68
+6 10: Code: 68
+7 15: Code: 68
+8 2: Code: 68
+9 0.001: Code: 69
+10 0x12.34abc: Code: 69
+
+Identifier Table:
+1 Name: num2
+2 Name: num1
+3 Name: ans
+4 Name: op
+5 Name: ans
+6 Name: num2
+7 Name: num1
+8 Name: ans
+9 Name: op
+10 Name: op
+11 Name: num2
+12 Name: num1
+13 Name: include
+14 Name: stdio.h
+15 Name: main
+16 Name: num1
+17 Name: num2
+18 Name: op
+19 Name: ans
+20 Name: d
+21 Name: d
+22 Name: d
+23 Name: ans
+24 Name: op
+25 Name: ans
+26 Name: num1
+27 Name: num2
+28 Name: ans
+29 Name: op
+30 Name: ans
+31 Name: num1
+32 Name: num2
+33 Name: ans
+34 Name: ans
+35 Name: ans
+36 Name: ans
+37 Name: f
+38 Name: f_err
+39 Name: result
+40 Name: d
+41 Name: ans
+
+Error Table:
+1 Name: %=
+2 Name: |=
+3 Name: &=
+4 Name: 0.0.1
+5 Name: 9_errID
+

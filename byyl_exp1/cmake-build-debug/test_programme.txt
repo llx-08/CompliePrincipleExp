@@ -1,9 +1,33 @@
-#include <stdio.h>
+# include<stdio.h>
+int main(){
+    int num1,num2,op,ans;
+    scanf("%d%d%d",num1,num2,op);
+    if(op==0)
+    {
+        ans = num1 + num2;
+        ans ++;
+    };
+    if(op==1)
+    {
+        ans = num1 - num2;
+        ans --;
+    };
+    if(op==2)
+    {
+        ans = num1 & num2;
+        ans %= 10;
+    };
+    if(op==3)
+    {
+        ans = num1 | num2;
+        ans |= 10;
+        ans &= 15;
+        ans = ans**2;
+    };
 
-int main()
-{
-   printf("Hello World");
-   int _daw...dwaf
+    double f = 0.001;
+    double f_err = 0.0.1;
+    double 9_errID = 0x12.34abc;
+    printf("result = %d",ans);
 
-   return 0;
 }

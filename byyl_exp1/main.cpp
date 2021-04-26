@@ -55,7 +55,7 @@ bool judge(string str, int line_count){// 判断是否为数字/标识符/关键
 
     for (auto & i : keyword) {
         if (str == i.first){
-            outFile <<"( "<<str<<", "<<i.second<<" )"<<endl;
+            outFile <<"( " << i.second << ", - )"<<endl;
 
             if (chara_mp.find(str)!=chara_mp.end()){// exist
                 chara_mp[str] += 1;
@@ -77,14 +77,17 @@ bool judge(string str, int line_count){// 判断是否为数字/标识符/关键
             chara_mp[str] = 1;
         }
 
-        outFile << "( " << str <<", 71 )" <<endl;
-        return true;
+        identifier_mp[identifier_mp.size()] = str;
+        outFile << "( 71, " << identifier_mp.size() << " )" <<endl;
 
+        return true;
     } else if (str[0] >= '0' and str[0] <= '9') { // 数字开头
         pair<int, int> p_temp = checkIfDigit(str);
-        if        (p_temp.first == 0 and p_temp.second == 0){
 
-            outFile << "( " << str <<", 68 )" <<endl; //整数
+        if (p_temp.first == 0 and p_temp.second == 0){
+
+            constTable.emplace_back(str, 68);
+            outFile << "( 68, "<< constTable.size() << " )" <<endl; //整数
 
             if (chara_mp.find(str)!=chara_mp.end()){// exist
                 chara_mp[str] += 1;
@@ -93,20 +96,22 @@ bool judge(string str, int line_count){// 判断是否为数字/标识符/关键
             }
 
         } else if (p_temp.first == 1 and p_temp.second == 0){
-            cout << "Error Occurred At Line " << line_count << endl;
-            outFile << "( " << str <<", Error: Invalid Digit )" <<endl;
+            cout << "Error Occurred At Line " << line_count <<", Error Type: Invalid Digit" << endl;
+            error_mp[error_mp.size()] = str;
+            outFile << "( -1, " << error_mp.size() << " )" <<endl;
         } else if (p_temp.first == 1 and p_temp.second == 1){
-            cout << "Error Occurred At Line " << line_count << endl;
-            outFile << "( " << str <<", Error: Invalid Float Digit )" <<endl;
+            cout << "Error Occurred At Line " << line_count << ", Error Type: Invalid Float Digit" << endl;
+            error_mp[error_mp.size()] = str;
+            outFile << "( -2, " << error_mp.size() << " )" <<endl;
         } else {
-            outFile << "( " << str <<", 69 )" <<endl; // 浮点数
+            constTable.emplace_back(str, 69);
+            outFile << "( 69, " << constTable.size() <<" )" <<endl; // 浮点数
 
             if (chara_mp.find(str)!=chara_mp.end()){// exist
                 chara_mp[str] += 1;
             } else {//not exist
                 chara_mp[str] = 1;
             }
-
         }
 
         if (p_temp.first == 1)
@@ -114,27 +119,50 @@ bool judge(string str, int line_count){// 判断是否为数字/标识符/关键
 
         return true;
     } else {
-        cout << "Error Occurred At Line " << line_count << endl;
-        outFile << "( " << str <<", Error: Invalid Identifier )" <<endl;
+        error_mp[error_mp.size()] = str;
+        cout << "Error Occurred At Line " << line_count << ", Error Type: Invalid Identifier" << endl;
+        outFile << "( -4, " << error_mp.size() <<" )" <<endl;
         return false;
     }
 
 //    cout << flag << endl;
 }
 
-void output2Symbol_table(unordered_map<int, string> mp, vector<pair<string, int>> constTable){
+void output2Symbol_table(unordered_map<int, string> mp, vector<pair<string, int>> constTable, unordered_map<int, string> error_mp){
 
     symbol_table << "Const Table:" << endl;
 
     for (int i = 0; i < constTable.size(); ++i) { // 输入常数表
-        symbol_table << i << " " << constTable[i].first << ": Code" << constTable[i].second << endl;
+        symbol_table << i+1 << " " << constTable[i].first << ": Code: " << constTable[i].second << endl;
     }
+
+    symbol_table << endl;
 
     symbol_table << "Identifier Table:" << endl;
 
+    vector<string> symbol_temp;
+
     for (auto & i : mp) {
-        symbol_table << i.first << " Name: " << i.second << endl;
+        symbol_temp.push_back(i.second);
     }
+    for (int i = symbol_temp.size()-1; i >=0 ; --i) {
+        symbol_table << symbol_temp.size()-i << " Name: " << symbol_temp[i] << endl;
+    }
+
+    symbol_table << endl;
+
+    symbol_table << "Error Table:" << endl;
+
+    vector<string> err_temp;
+
+    for (auto & i : error_mp) {
+        err_temp.push_back(i.second);
+    }
+    for (int i = err_temp.size()-1; i >=0 ; --i) {
+        symbol_table << err_temp.size()-i << " Name: " << err_temp[i] << endl;
+    }
+    symbol_table << endl;
+
 }
 
 int main() {
@@ -166,6 +194,7 @@ int main() {
         int curr = 0;
 
         for (; curr < test_str.size(); curr++){
+//            cout<<"curr: "<<test_str[curr]<<endl;
 
             int state = 0; // 初始化状态，每次循环读入都需要从开始状态开始
 
@@ -175,58 +204,59 @@ int main() {
             for (char c : delimiters) {
                 if (test_str[curr] == c){
                     word_count++;
-                    outFile << "(" << test_str[curr];
+                    outFile << "( ";
 
                     switch (c) {
                         case '(' : {
-                            outFile <<", 56)" <<endl;
+                            outFile <<"56";
                             break;
                         }
                         case ')' : {
-                            outFile <<", 57)" <<endl;
+                            outFile <<"57";
                             break;
                         }
                         case '[' : {
-                            outFile <<", 58)" <<endl;
+                            outFile <<"58";
                             break;
                         }
                         case ']' : {
-                            outFile <<", 59)" <<endl;
+                            outFile <<"59";
                             break;
                         }
                         case '{' : {
-                            outFile <<", 60)" <<endl;
+                            outFile <<"60";
                             break;
                         }
                         case '}' : {
-                            outFile <<", 61)" <<endl;
+                            outFile <<"61";
                             break;
                         }
                         case '#' : {
-                            outFile <<", 62)" <<endl;
+                            outFile <<"62";
                             break;
                         }
                         case ',' : {
-                            outFile <<", 63)" <<endl;
+                            outFile <<"63";
                             break;
                         }
                         case ';' : {
-                            outFile <<", 64)" <<endl;
+                            outFile <<"64";
                             break;
                         }
                         case '\'': {
-                            outFile <<", 65)" <<endl;
+                            outFile <<"65";
                             break;
                         }
                         case '"' : {
-                            outFile <<", 66)" <<endl;
+                            outFile <<"66";
                             break;
                         }
                         case ':' : {
-                            outFile <<", 67)" <<endl;
+                            outFile <<"67";
                             break;
                         }
                     }
+                    outFile << ", - )" << endl;
 
                     char tempArray[2];
                     tempArray[0] = test_str[curr];
@@ -285,48 +315,60 @@ int main() {
                                 chara_mp[temp] = 1;
                             }
 
-                            outFile<<"( "<<temp;
-
                             if (temp == "++") {// 两个字符的运算符
-                                outFile<<", 45 )"<<endl;
+                                outFile<<"( 45, - )";
                             } else if (temp == "--"){
-                                outFile<<", 46 )"<<endl;
+                                outFile<<"( 46, - )";
                             } else if (temp == "**"){
-                                outFile<<", 47 )"<<endl;
+                                outFile<<"( 47, - )";
                             } else if (temp == "+="){
-                                outFile<<", 48 )"<<endl;
+                                outFile<<"( 48, - )";
                             } else if (temp == "-="){
-                                outFile<<", 49 )"<<endl;
+                                outFile<<"( 49, - )";
                             } else if (temp == "*="){
-                                outFile<<", 50 )"<<endl;
+                                outFile<<"( 50, - )";
                             } else if (temp == "/="){
-                                outFile<<", 51 )"<<endl;
+                                outFile<<"( 51, - )";
                             } else if (temp == "=="){
-                                outFile<<", 52 )"<<endl;
+                                outFile<<"( 52, - )";
                             } else if (temp == ">="){
-                                outFile<<", 52 )"<<endl;
+                                outFile<<"( 53, - )";
                             } else if (temp == "<="){
-                                outFile<<", 52 )"<<endl;
+                                outFile<<"( 54, - )";
                             } else if(temp == "!="){
-                                outFile<<", 52 )"<<endl;
+                                outFile<<"( 55, - )";
                             } else{
-                                cout<<"Error Occurred At Line "<<line_count<<endl;
-                                outFile<<", Error:Invalid Operator )"<<endl;
+                                err_count++;
+                                cout<<"Error Occurred At Line "<<line_count<<", Error Type :Invalid Operator"<<endl;
+                                error_mp[error_mp.size()] = temp;
+                                outFile<<"( -3 , "<< error_mp.size()<<" )"<<endl;
                             }
 
                         } else {
-                            cout<<"Error Occurred At Line "<<line_count<<endl;
-                            outFile<<"( "<<test_str[curr]<<test_str[curr+1]<<", Error:Invalid Operator )"<<endl;
+                            char tempArray[3];
+
+                            tempArray[0] = test_str[curr];
+                            tempArray[1] = test_str[curr+1];
+                            tempArray[2] = '\0';
+
+                            string temp = tempArray;
+
+                            err_count++;
+
+                            cout<<"Error Occurred At Line "<<line_count<<", Error Type :Invalid Operator"<<endl;
+                            error_mp[error_mp.size()] = temp;
+                            outFile<<"( -3 , "<< error_mp.size()<<" )"<<endl;
                         }
 
                         curr++;
                     } else {
-                        outFile<<"( "<<test_str[curr];
 
                         char tempArray[2];
                         tempArray[0] = test_str[curr];
                         tempArray[1] = '\0';
+
                         string temp = tempArray;
+
                         if (chara_mp.find(temp)!=chara_mp.end()){// exist
                             chara_mp[temp] += 1;
                         } else {//not exist
@@ -335,53 +377,55 @@ int main() {
 
                         switch (test_str[curr]) {
                             case '+':{
-                                outFile<<", 34 )"<<endl;
+                                outFile<<"( 34, - )";
                                 break;
                             }
                             case '-':{
-                                outFile<<", 35 )"<<endl;
+                                outFile<<"( 35, - )";
                                 break;
                             }
                             case '*':{
-                                outFile<<", 36 )"<<endl;
+                                outFile<<"( 36, - )";
                                 break;
                             }
                             case '/':{
-                                outFile<<", 37 )"<<endl;
+                                outFile<<"( 37, - )";
                                 break;
                             }
                             case '=':{
-                                outFile<<", 38 )"<<endl;
+                                outFile<<"( 38, - )";
                                 break;
                             }
                             case '>':{
-                                outFile<<", 39 )"<<endl;
+                                outFile<<"39, - )";
                                 break;
                             }
                             case '<':{
-                                outFile<<", 40 )"<<endl;
+                                outFile<<"( 40, - )";
                                 break;
                             }
                             case '&':{
-                                outFile<<", 41 )"<<endl;
+                                outFile<<"( 41, - )";
                                 break;
                             }
                             case '|':{
-                                outFile<<", 42 )"<<endl;
+                                outFile<<"( 42, - )";
                                 break;
                             }
                             case '!':{
-                                outFile<<", 43 )"<<endl;
+                                outFile<<"( 43, - )";
                                 break;
                             }
                             case '%':{
-                                outFile<<", 44 )"<<endl;
+                                outFile<<"( 44, - )";
                                 break;
                             }
 
                             default:{
-                                cout<<"Error Occurred At Line "<<line_count<<endl;
-                                outFile<<"( "<<test_str[curr]<<test_str[curr+1]<<", Error:Invalid Operator )"<<endl;
+                                err_count++;
+                                cout<<"Error Occurred At Line "<<line_count<<", Error Type :Invalid Operator"<<endl;
+                                error_mp[error_mp.size()] = temp;
+                                outFile<<"( -3 , "<< error_mp.size()<<" )"<<endl;
                             }
                         }
                     }
@@ -406,10 +450,7 @@ int main() {
 
             bool flag = judge(temp, line_count);
 
-//            cout<<"?"<<endl;
-
             if (flag == false){
-//                cout<<test_str[curr]<<" ???"<<endl;
                 err_count++;
             }
             word_count++;
@@ -434,7 +475,7 @@ int main() {
         outFile << "Word: " << iter.first << " Count: " << iter.second <<endl;
     }
 
-    output2Symbol_table(identifier_mp, constTable);
+    output2Symbol_table(identifier_mp, constTable, error_mp);
 
     inputFile.close();
     outFile.close();

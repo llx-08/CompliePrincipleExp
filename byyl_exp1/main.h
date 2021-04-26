@@ -60,7 +60,7 @@ vector<pair<string, int>> keyword = {
 string operatorChar = "+-*/=><&|~!%";
 
 // 分界符
-string delimiters   = "()[]{}#,;'\"";
+string delimiters   = "()[]{}#,;'\":";
 
 // 识别是否为合法数字
 pair<int, int> checkIfDigit(string str);
@@ -71,15 +71,19 @@ bool judge(string str, int line_count);
 // 符号表，用于最后统计单词数量
 unordered_map<string, int> chara_mp;
 
-// 临时存储符号表以及常数表的vector
+// 临时存储符号表错误表以及常数表的vector
 unordered_map<int, string> identifier_mp;
+unordered_map<int, string> error_mp;
 vector<pair<string, int>> constTable;
 
 // 符号表接口
-void output2Symbol_table(unordered_map<int, string> mp, vector<pair<string, int>> constTable);
+void output2Symbol_table(unordered_map<int, string> mp,
+                         vector<pair<string, int>> constTable,
+                         unordered_map<int, string> error_mp);
 
 // 输入输出文件流
 ifstream inputFile;    // 待进行词法分析源程序
 ofstream outFile;      // 分析结果
 ofstream symbol_table; // 符号表,常数表输出流
+ofstream error_table;  // 错误表
 
