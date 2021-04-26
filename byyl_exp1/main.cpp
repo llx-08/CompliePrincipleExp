@@ -46,7 +46,7 @@ pair<int, int> checkIfDigit(string str){
         }
     }
 
-    return {err, point};
+    return {err, point}; // 是否出错&是否为浮点数
 }
 
 bool judge(string str, int line_count){// 判断是否为数字/标识符/关键字
@@ -84,7 +84,7 @@ bool judge(string str, int line_count){// 判断是否为数字/标识符/关键
         pair<int, int> p_temp = checkIfDigit(str);
         if        (p_temp.first == 0 and p_temp.second == 0){
 
-            outFile << "( " << str <<", 68 )" <<endl;
+            outFile << "( " << str <<", 68 )" <<endl; //整数
 
             if (chara_mp.find(str)!=chara_mp.end()){// exist
                 chara_mp[str] += 1;
@@ -99,7 +99,7 @@ bool judge(string str, int line_count){// 判断是否为数字/标识符/关键
             cout << "Error Occurred At Line " << line_count << endl;
             outFile << "( " << str <<", Error: Invalid Float Digit )" <<endl;
         } else {
-            outFile << "( " << str <<", 69 )" <<endl;
+            outFile << "( " << str <<", 69 )" <<endl; // 浮点数
 
             if (chara_mp.find(str)!=chara_mp.end()){// exist
                 chara_mp[str] += 1;
@@ -122,12 +122,27 @@ bool judge(string str, int line_count){// 判断是否为数字/标识符/关键
 //    cout << flag << endl;
 }
 
+void output2Symbol_table(unordered_map<int, string> mp, vector<pair<string, int>> constTable){
+
+    symbol_table << "Const Table:" << endl;
+
+    for (int i = 0; i < constTable.size(); ++i) { // 输入常数表
+        symbol_table << i << " " << constTable[i].first << ": Code" << constTable[i].second << endl;
+    }
+
+    symbol_table << "Identifier Table:" << endl;
+
+    for (auto & i : mp) {
+        symbol_table << i.first << " Name: " << i.second << endl;
+    }
+}
+
 int main() {
     string path;
 
     cout<<"Input Test File Path, If Using Default Path, Enter default"<<endl;
     cin >> path;
-    cout << "====================================Lexical Analysis Begin====================================" << endl;
+    cout << "====================================Lexical  Analysis  Begin  ====================================" << endl;
 
     if (path == "default")
         inputFile.open("test_programme.txt");
@@ -135,6 +150,7 @@ int main() {
         inputFile.open(path);
 
     outFile.open("result.txt");
+    symbol_table.open("symbol_table.txt");
 
     string test_str;
 
@@ -418,8 +434,11 @@ int main() {
         outFile << "Word: " << iter.first << " Count: " << iter.second <<endl;
     }
 
+    output2Symbol_table(identifier_mp, constTable);
+
     inputFile.close();
     outFile.close();
+    symbol_table.close();
 
     cout<<"====================================Lexical Analysis Completed===================================="<<endl;
     if (err_count == 0){

@@ -71,6 +71,15 @@ bool judge(string str, int line_count);
 // 符号表，用于最后统计单词数量
 unordered_map<string, int> chara_mp;
 
+// 临时存储符号表以及常数表的vector
+unordered_map<int, string> identifier_mp;
+vector<pair<string, int>> constTable;
+
+// 符号表接口
+void output2Symbol_table(unordered_map<int, string> mp, vector<pair<string, int>> constTable);
+
 // 输入输出文件流
-ifstream inputFile;
-ofstream outFile;
+ifstream inputFile;    // 待进行词法分析源程序
+ofstream outFile;      // 分析结果
+ofstream symbol_table; // 符号表,常数表输出流
+
