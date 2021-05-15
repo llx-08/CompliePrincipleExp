@@ -1,4 +1,4 @@
-from class_methodDefine import *
+import class_methodDefine as cm
 
 
 def get_first_set(t_symbol_set, n_symbol_set, production):
@@ -90,8 +90,7 @@ def test_first_set():
         ["F", "id"]
     ]
 
-    n_set, t_set, production = \
-        get_grammarAndProduction(grammar=grammar)
+    n_set, t_set, production = cm.get_grammarAndProduction(grammar=grammar)
     print()
 
     first_set = get_first_set(t_set, n_set, production=production)
@@ -188,6 +187,8 @@ def test_follow_set():
     for f in follow_set:
         print(f, end=": ")
         print(follow_set[f])
+
+    return first_set, follow_set, n_set, t_set, production
 
 
 # if __name__ == '__main__':
