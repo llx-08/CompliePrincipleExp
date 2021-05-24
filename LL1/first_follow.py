@@ -59,9 +59,9 @@ def get_first_set(t_symbol_set, n_symbol_set, production):
                     if flag == 1:  # Y1 Y2…… Yk可推导得到ε,  则将ε加入到FIRST(X)
                         all_first_set[p[0]].append("@")
 
-    print(all_first_set)
-    print("remaining")
-    print(remain_add)
+    # print(all_first_set)
+    # print("remaining")
+    # print(remain_add)
 
     for i in range(len(remain_add)):  # 排序，保证添加first集的顺序
         for j in range(i, len(remain_add)):
@@ -91,13 +91,13 @@ def test_first_set():
     ]
 
     n_set, t_set, production = cm.get_grammarAndProduction(grammar=grammar)
-    print()
+    # print()
 
     first_set = get_first_set(t_set, n_set, production=production)
-    print("first set test result:")
-    for i in first_set:
-        print(i, end="   ")
-        print(first_set[i])
+    # print("first set test result:")
+    # for i in first_set:
+    #     print(i, end="   ")
+    #     print(first_set[i])
 
     return first_set, n_set, t_set, production
 
@@ -121,10 +121,6 @@ def get_follow_set(t_symbol_set, n_symbol_set, production, first_set):
                 for i in range(len(p[1]) - 1):
                     B = rightside[i]
                     beta = rightside[i + 1]
-                    # print("A -> B BETA : ", )
-                    # print(n, end="  -> ")
-                    # print(B, end=" ")
-                    # print(beta)
 
                     # 对于A→αB, 将FOLLOW(A)放入FOLLOW(B)中
                     if i+1 == len(p[1])-1 and beta in n_symbol_set:  # beta为最后一个，且为非终结符
@@ -159,10 +155,7 @@ def get_follow_set(t_symbol_set, n_symbol_set, production, first_set):
 
                     # 对于A→αBβ的产生式，则将FIRST(β)–ε放入FOLLOW(B)
                     if B in n_symbol_set:
-                        # print("IN FIRST LOOP:  B: ", end="")
-                        # print(B)
-                        # remain_add.append([B, beta, "first"]) first集合是不会修改的，不需要remain
-                        # print("symbol need append")
+
                         for first_symbol in first_set[beta]:
                             # print(first_symbol)
                             if first_symbol not in all_follow_set[B] and first_symbol != "@":
@@ -183,10 +176,10 @@ def test_follow_set():
 
     follow_set = get_follow_set(t_set, n_set, production, first_set)
 
-    print("follow set test result:")
-    for f in follow_set:
-        print(f, end=": ")
-        print(follow_set[f])
+    # print("follow set test result:")
+    # for f in follow_set:
+    #     print(f, end=": ")
+    #     print(follow_set[f])
 
     return first_set, follow_set, n_set, t_set, production
 

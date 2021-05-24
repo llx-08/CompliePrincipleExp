@@ -1,4 +1,5 @@
 from first_follow import *
+from graphviz import Digraph
 
 
 class Stack(object):  # 实现栈，后面符号栈需要使用
@@ -36,8 +37,42 @@ class Stack(object):  # 实现栈，后面符号栈需要使用
         print()
 
 
+class treeNode:
+
+    def __init__(self):
+        self.val        = ""
+        self.father     = None
+        self.child_node = []
+
+    def node_assign(self, val):
+        self.val = val
+
+    def add_child(self, child):
+        self.child_node.append(child)
+
+
 def readGrammar():
-    pass
+    wenfa = []
+    wenfa_file = open("wenfa.txt", encoding="utf-8")
+
+    line = wenfa_file.readline()
+
+    while line:
+        words = line.split()
+        print(words)
+
+        if words:
+            wenfa.append([words[0], words[1:]])
+        line = wenfa_file.readline()
+
+    return wenfa
+
+
+def readTestCase():
+    lex_analyse_result = []
+
+
+    return lex_analyse_result
 
 
 def get_grammarAndProduction(grammar):
@@ -51,23 +86,23 @@ def get_grammarAndProduction(grammar):
             n_set.append(left)
 
     for g in grammar:
-        right = g[1].split()
+        right = g[1]
 
         for r in right:
-            if r not in n_set:
+            if r not in n_set and r not in t_set:
                 t_set.append(r)
 
-    print("终结符")
-    print(n_set)
-
-    print("非终结符")
-    print(t_set)
+    # print("终结符")
+    # print(n_set)
+    #
+    # print("非终结符")
+    # print(t_set)
 
     for g in grammar:
-        production.append([g[0], g[1].split()])
+        production.append([g[0], g[1]])
 
-    print("产生式")
-    print(production)
+    # print("产生式")
+    # print(production)
 
     return n_set, t_set, production
 
@@ -81,9 +116,9 @@ def build_predict_table(n_set, t_set, all_first_set, all_follow_set, production)
             action_table[A] = {a: "ERR"}
 
     for p in production:
-        A         = p[0]
+        A = p[0]
         rightside = p[1]
-        alpha     = rightside[0]
+        alpha = rightside[0]
 
         for b in all_first_set[alpha]:
             if b in t_set:  # 对于FIRST(α)中的每个终结符号b，将产生式A→α加入到M[A, b]中
@@ -101,19 +136,19 @@ def build_table_test(n_set, t_set, all_first_set, all_follow_set, production):
     print("build table test result:")
 
     action_table = build_predict_table(n_set, t_set, all_first_set, all_follow_set, production)
-    print("raw table")
+    # print("raw table")
+    #
+    # for A in action_table:
+    #     print(A)
+    #     print(action_table[A])
+    # print("format output")
 
-    for A in action_table:
-        print(A)
-        print(action_table[A])
-    print("format output")
-
-    for A in action_table:
-        for b in action_table[A]:
-            print(A, end=" ")
-            print(b, end=": ")
-            print(action_table[A][b], end="   ")
-        print()
+    # for A in action_table:
+    #     for b in action_table[A]:
+    #         print(A, end=" ")
+    #         print(b, end=": ")
+    #         print(action_table[A][b], end="   ")
+    #     print()
 
     return action_table
 
@@ -136,23 +171,25 @@ def grammar_analyse(n_set, t_set, input_buffer, predict_table, first_set, follow
 
     input_buffer.append("$")
 
-    print("check init: symbol stack & input buffer")
-    symbol_stack.check_element()
-    print(input_buffer)
+    # 语法树根节点初始化，与符号栈保持一致
+    # root = treeNode()
+    # root.node_assign("E")
+    # curr_node = root
+
+    # print("check init: symbol stack & input buffer")
+    # symbol_stack.check_element()
+    # print(input_buffer)
 
     curr_input_index = 0
-    f = 1
     # 补一个判断语句
     while curr_input_index < len(input_buffer):
 
         input_symbol = input_buffer[curr_input_index]
         top_symbol = symbol_stack.top()
 
-        print("check each loop: input symbol & stack top symbol")
-        print(input_symbol)
-        print(top_symbol)
-        # if f == 10:
-        #     break
+        # print("check each loop: input symbol & stack top symbol")
+        # print(input_symbol)
+        # print(top_symbol)
 
         # 如果X是终结符，且X=a≠＄
         if top_symbol in t_set and top_symbol == input_symbol and top_symbol != "$":
@@ -169,8 +206,6 @@ def grammar_analyse(n_set, t_set, input_buffer, predict_table, first_set, follow
             elif predict_table[top_symbol][input_symbol] is not None:  # 有产生式，非空
                 used_production.append(predict_table[top_symbol][input_symbol])
 
-                symbol_stack.pop()
-
                 rightside = predict_table[top_symbol][input_symbol][1]  # 产生式右部
 
                 for r in reversed(rightside):
@@ -185,17 +220,56 @@ def grammar_analyse(n_set, t_set, input_buffer, predict_table, first_set, follow
 
 
 def test_grammar_analyse(n_set, t_set, input_buffer, predict_table, first_set, follow_set):
-
-    used_production = grammar_analyse(n_set, t_set, input_buffer, predict_table, first_set, follow_set)
+    info, used_production = grammar_analyse(n_set, t_set, input_buffer, predict_table, first_set, follow_set)
     print("used production in order: ")
     for u in used_production:
         print(u)
 
-
-def draw_grammar_tree(used_prediction):
-    for prediction in used_prediction:
-        pass
+    return used_production
 
 
-def loop_drawing():
-    pass
+def print_tree(root, t_set, n_set):  # 从根节点打印语法树
+    if root.val in t_set:
+        print(root.val)
+        return
+    elif root.val in n_set:
+        print(root.val, end=" —————— ")
+
+    for child in root.child_node:
+        print_tree(child, t_set, n_set)
+
+
+def loop_build_subtree(used_production, t_set, n_set, curr_index, right_index):
+    subtree_val = used_production[curr_index][right_index]
+    print("sub tree val: ")
+    print(subtree_val)
+
+    temp_tree_node = treeNode()
+
+    if subtree_val in t_set or subtree_val == "@":
+        print("?")
+        temp_tree_node.node_assign(subtree_val)
+
+    elif subtree_val in n_set:
+        curr_index += 1
+        for next_right_index in range(len(used_production[curr_index][1])):
+            temp_tree_node.add_child(loop_build_subtree(used_production, t_set, n_set, curr_index, right_index))
+
+    return temp_tree_node
+
+
+# 用顺序排列的产生式转为语法树
+def build_grammar_tree(used_production, t_set, n_set):
+    root = treeNode()
+    root.node_assign(used_production[0][0])
+    curr_index = 0
+
+    for right_index in range(len(used_production[curr_index][1])):
+        curr_index += 1
+        print("index: ", end="")
+        print(curr_index)
+        root.add_child(loop_build_subtree(used_production, t_set, n_set, curr_index, right_index))
+
+    return root
+
+
