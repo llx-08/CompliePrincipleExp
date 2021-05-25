@@ -1,5 +1,5 @@
 from first_follow import *
-from graphviz import Digraph
+from my_tree_plot import *
 from output_temp_result import *
 
 
@@ -39,19 +39,8 @@ class Stack(object):  # 实现栈，后面符号栈需要使用
         print()
         print()
 
-
-class treeNode:
-
-    def __init__(self):
-        self.val        = ""
-        self.father     = None
-        self.child_node = []
-
-    def node_assign(self, val):
-        self.val = val
-
-    def add_child(self, child):
-        self.child_node.append(child)
+    def add_child2top(self, child_node):
+        self.__list[-1].child_list.append(child_node)
 
 
 def readGrammar():
@@ -180,6 +169,14 @@ def grammar_analyse(n_set, t_set, input_symbol_buffer, predict_table, first_set,
     symbol_stack.push("$")
     symbol_stack.push("程序开始")
 
+    # grammar tree init
+    tree_node_id = 0
+    grammar_tree_root = TreeNode(tree_node_id, "程序开始", False)
+    current_root      = grammar_tree_root
+
+    tree_node_stack = Stack()
+    tree_node_stack.push(grammar_tree_root)
+
     input_buffer = []
     line_buffer  = []
 
@@ -189,15 +186,6 @@ def grammar_analyse(n_set, t_set, input_symbol_buffer, predict_table, first_set,
 
     input_buffer.append("$")
     line_buffer.append("$")
-
-    # 语法树根节点初始化，与符号栈保持一致
-    # root = treeNode()
-    # root.node_assign("E")
-    # curr_node = root
-
-    # print("check init: symbol stack & input buffer")
-    # symbol_stack.check_element()
-    # print(input_buffer)
 
     curr_input_index = 0
     # 补一个判断语句
@@ -210,7 +198,6 @@ def grammar_analyse(n_set, t_set, input_symbol_buffer, predict_table, first_set,
         print(input_symbol)
         print("at line:", end=" ")
         print(curr_line)
-
         symbol_stack.check_element()
 
         top_symbol = symbol_stack.top()
@@ -219,6 +206,12 @@ def grammar_analyse(n_set, t_set, input_symbol_buffer, predict_table, first_set,
         if top_symbol in t_set and top_symbol == input_symbol and top_symbol != "$":
             symbol_stack.pop()  # X出栈
             curr_input_index += 1  # 读取下一个输入符号
+
+            # grammar tree add node
+            leaf_node = TreeNode(tree_node_id, top_symbol, True)
+            leaf_node.set_father(current_root.id)
+            tree_node_id += 1
+            current_root.add_child(leaf_node)
 
         elif top_symbol in t_set and top_symbol != input_symbol and top_symbol != "$":
             error_solver(first_set, follow_set, 1, symbol_stack, input_buffer, curr_input_index, curr_line)  # X ≠ a则报错
@@ -239,6 +232,8 @@ def grammar_analyse(n_set, t_set, input_symbol_buffer, predict_table, first_set,
                 for r in reversed(rightside):
                     if r != "@":
                         symbol_stack.push(r)
+
+                current_root = tree_node_stack.pop()
 
         elif top_symbol == "$" and input_symbol == "$":
             return "Grammar Analyse Success!", used_production

@@ -37,9 +37,9 @@ class Node():
 
 def read_int(line, index):
     re = ''
-    while (line[index] >= '0' and line[index] <= '9'):
+    while '0' <= line[index] <= '9':
         re += line[index]
-        index += 1;
+        index += 1
     return re
 
 
