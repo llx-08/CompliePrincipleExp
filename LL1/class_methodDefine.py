@@ -1,5 +1,6 @@
 from first_follow import *
 from graphviz import Digraph
+from output_temp_result import *
 
 
 class Stack(object):  # 实现栈，后面符号栈需要使用
@@ -32,8 +33,10 @@ class Stack(object):  # 实现栈，后面符号栈需要使用
 
     def check_element(self):
         # 查看栈内元素，方便调试
+        print("Stack Element Include:", end="")
         for i in self.__list:
             print(i, end=" ")
+        print()
         print()
 
 
@@ -59,7 +62,6 @@ def readGrammar():
 
     while line:
         words = line.split()
-        print(words)
 
         if words:
             wenfa.append([words[0], words[1:]])
@@ -129,6 +131,8 @@ def build_predict_table(n_set, t_set, all_first_set, all_follow_set, production)
                 if b in t_set:
                     action_table[A][b] = p
 
+    action_table["函数块"]["id"] = ['函数块', ['声明语句闭包', '函数块闭包']]
+
     return action_table
 
 
@@ -136,40 +140,55 @@ def build_table_test(n_set, t_set, all_first_set, all_follow_set, production):
     print("build table test result:")
 
     action_table = build_predict_table(n_set, t_set, all_first_set, all_follow_set, production)
-    # print("raw table")
-    #
-    # for A in action_table:
-    #     print(A)
-    #     print(action_table[A])
-    # print("format output")
 
-    # for A in action_table:
-    #     for b in action_table[A]:
-    #         print(A, end=" ")
-    #         print(b, end=": ")
-    #         print(action_table[A][b], end="   ")
-    #     print()
+    print_action_table(action_table, t_set, n_set, production)
 
     return action_table
 
 
-def error_solver(first_set, follow_set, type):
+def error_solver(first_set, follow_set, type, symbol_stack, input_buffer, curr_input_index, curr_line):
+    # 将FOLLOW(A)中的所有符号作为A的同步符号。跳过输入串中的一些词法单元，
+    # 直至遇到FOLLOW(A)中的元素，再把A从栈中弹出，很可能使分析继续进行；
+    # ②把FIRST(A)中的符号加到A的同步符号集，当FIRST(A)中的某个符号在输入中出现时，
+    # 可根据A继续进行语法分析；
+    # ③如果栈顶的终结符不能被匹配，就可以弹出该终结符，此时相当于把所有的符号都看作同步符号
+    A = symbol_stack.top()
+    print("ERROR OCCURRED:")
+    print("Current Symbol:", end=" ")
+    print(A)
+    print("Current Input :", end=" ")
+    print(input_buffer[curr_input_index])
+    print("Current Line :",  end="")
+
     if type == 1:  # 栈顶的终结符与当前输入符不匹配
-        pass
-
+        symbol_stack.pop()
     elif type == 2:  # 栈顶为非终结符A，面临的输入符为a，但分析表中M[A,a]为空
-        pass
+        follow_set_A = follow_set[A]
+        next_input_index = curr_input_index + 1
+
+        while input_buffer[next_input_index] not in follow_set_A:
+            next_input_index += 1
+        return next_input_index
+    # raise Exception("ERROR")
 
 
-def grammar_analyse(n_set, t_set, input_buffer, predict_table, first_set, follow_set):
+def grammar_analyse(n_set, t_set, input_symbol_buffer, predict_table, first_set, follow_set):
     # 初始化
     used_production = []  # 用到的产生式，按顺序排列，用于构建语法树
 
     symbol_stack = Stack()
     symbol_stack.push("$")
-    symbol_stack.push("E")
+    symbol_stack.push("程序开始")
+
+    input_buffer = []
+    line_buffer  = []
+
+    for n in input_symbol_buffer:
+        input_buffer.append(n[0])
+        line_buffer.append(n[1])
 
     input_buffer.append("$")
+    line_buffer.append("$")
 
     # 语法树根节点初始化，与符号栈保持一致
     # root = treeNode()
@@ -185,11 +204,16 @@ def grammar_analyse(n_set, t_set, input_buffer, predict_table, first_set, follow
     while curr_input_index < len(input_buffer):
 
         input_symbol = input_buffer[curr_input_index]
-        top_symbol = symbol_stack.top()
+        curr_line    = line_buffer[curr_input_index]
+        # check
+        print("input buffer:", end=" ")
+        print(input_symbol)
+        print("at line:", end=" ")
+        print(curr_line)
 
-        # print("check each loop: input symbol & stack top symbol")
-        # print(input_symbol)
-        # print(top_symbol)
+        symbol_stack.check_element()
+
+        top_symbol = symbol_stack.top()
 
         # 如果X是终结符，且X=a≠＄
         if top_symbol in t_set and top_symbol == input_symbol and top_symbol != "$":
@@ -197,16 +221,20 @@ def grammar_analyse(n_set, t_set, input_buffer, predict_table, first_set, follow
             curr_input_index += 1  # 读取下一个输入符号
 
         elif top_symbol in t_set and top_symbol != input_symbol and top_symbol != "$":
-            error_solver(first_set, follow_set, 1)  # X ≠ a则报错
+            error_solver(first_set, follow_set, 1, symbol_stack, input_buffer, curr_input_index, curr_line)  # X ≠ a则报错
 
         elif top_symbol in n_set:  # X是非终结符，查M[X，a]表
+            # if input_symbol not in predict_table[top_symbol].keys() or \
             if predict_table[top_symbol][input_symbol] == "ERR":  # 若M[X，a]=error，则报错
-                error_solver(first_set, follow_set, 2)
+                curr_input_index = error_solver(first_set, follow_set, 2, symbol_stack, input_buffer, curr_input_index, curr_line)
 
-            elif predict_table[top_symbol][input_symbol] is not None:  # 有产生式，非空
+            elif len(predict_table[top_symbol][input_symbol]) == 2:  # 有产生式，非空
+                # 若M[X，a]=X→UVW，则X出栈，W、V、U依次入栈
                 used_production.append(predict_table[top_symbol][input_symbol])
 
                 rightside = predict_table[top_symbol][input_symbol][1]  # 产生式右部
+
+                symbol_stack.pop()
 
                 for r in reversed(rightside):
                     if r != "@":
@@ -216,7 +244,7 @@ def grammar_analyse(n_set, t_set, input_buffer, predict_table, first_set, follow
             return "Grammar Analyse Success!", used_production
 
         else:
-            error_solver(first_set, follow_set, 2)
+            curr_input_index = error_solver(first_set, follow_set, 2, symbol_stack, input_buffer, curr_input_index, curr_line)
 
 
 def test_grammar_analyse(n_set, t_set, input_buffer, predict_table, first_set, follow_set):
@@ -226,50 +254,5 @@ def test_grammar_analyse(n_set, t_set, input_buffer, predict_table, first_set, f
         print(u)
 
     return used_production
-
-
-def print_tree(root, t_set, n_set):  # 从根节点打印语法树
-    if root.val in t_set:
-        print(root.val)
-        return
-    elif root.val in n_set:
-        print(root.val, end=" —————— ")
-
-    for child in root.child_node:
-        print_tree(child, t_set, n_set)
-
-
-def loop_build_subtree(used_production, t_set, n_set, curr_index, right_index):
-    subtree_val = used_production[curr_index][right_index]
-    print("sub tree val: ")
-    print(subtree_val)
-
-    temp_tree_node = treeNode()
-
-    if subtree_val in t_set or subtree_val == "@":
-        print("?")
-        temp_tree_node.node_assign(subtree_val)
-
-    elif subtree_val in n_set:
-        curr_index += 1
-        for next_right_index in range(len(used_production[curr_index][1])):
-            temp_tree_node.add_child(loop_build_subtree(used_production, t_set, n_set, curr_index, right_index))
-
-    return temp_tree_node
-
-
-# 用顺序排列的产生式转为语法树
-def build_grammar_tree(used_production, t_set, n_set):
-    root = treeNode()
-    root.node_assign(used_production[0][0])
-    curr_index = 0
-
-    for right_index in range(len(used_production[curr_index][1])):
-        curr_index += 1
-        print("index: ", end="")
-        print(curr_index)
-        root.add_child(loop_build_subtree(used_production, t_set, n_set, curr_index, right_index))
-
-    return root
 
 

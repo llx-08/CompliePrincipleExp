@@ -1,48 +1,40 @@
 from class_methodDefine import *
 from first_follow import *
-
+from read_lexical_analyse_result import *
+from output_temp_result import *
 
 if __name__ == '__main__':
     # 构建语法分析器
-    grammar                  = readGrammar()
+    grammar = readGrammar()
     n_set, t_set, production = get_grammarAndProduction(grammar=grammar)
-    first_set                = get_first_set(t_set, n_set, production)
-    follow_set               = get_follow_set(t_set, n_set, production, first_set)
-    action_table             = build_predict_table(n_set, t_set, first_set, follow_set, production)
 
-    print("\n\n文法：")
-    for g in grammar:
-        print(g)
+    # print(can_be_null("取地址", production, n_set, t_set))
 
-    print("\n\n非终结符集合：")
-    for i in range(len(n_set)):
-        if i % 10 == 0:
-            print()
-        print(n_set[i], end=" ")
+    first_set = get_first_set(t_set, n_set, production)
+    follow_set = get_follow_set(t_set, n_set, production, first_set)
+    action_table = build_predict_table(n_set, t_set, first_set, follow_set, production)
 
-    print("\n\n终结符集合：")
-    for i in range(len(t_set)):
-        if i % 10 == 0:
-            print()
-        print(t_set[i], end=" ")
-
-    print("\n\nfirst 集：")
-    count = 0
-    for k in first_set:
-        count += 1
-        if count % 3 == 0:
-            print()
-        print(k, end=":  ")
-        print(first_set[k], end=" ")
-
-    print("\n\nfollow 集：")
-    count = 0
-    for k in follow_set:
-        count += 1
-        if count % 3 == 0:
-            print()
-        print(k, end=":  ")
-        print(follow_set[k], end=" ")
-
+    # 查看语法分析器构建结果
+    print("语法分析器构建结果")
+    print_test(grammar, n_set, t_set, first_set, follow_set, action_table, production)
 
     # 读取词法分析器结果
+    lexical_result                          = read_lexical_result()
+    const_table_list, identifier_table_list = read_symbol_table()
+    new_lexical_result                      = replaceID_WithSymbol(lexical_result, const_table_list, identifier_table_list)
+
+    # print("?")
+    # for new in range(len(new_lexical_result)):
+    #     print(new_lexical_result[new], end=" ")
+    #     print(lexical_result[new])
+
+    # 分析开始
+    msg, used_production = grammar_analyse(n_set, t_set,
+                                           new_lexical_result,
+                                           action_table,
+                                           first_set, follow_set)
+
+    print(msg)
+
+    # for u in used_production:
+    #     print(u)

@@ -1,4 +1,38 @@
 import class_methodDefine as cm
+import sys
+from output_temp_result import *
+
+sys.setrecursionlimit(10000000)
+
+
+def can_be_null(symbol, production, n_set, t_set):
+    print("symbol: ", end="")
+    print(symbol)
+    flag = False
+    for p in production:
+        if p[0] == symbol:
+            if p[1] == ["@"]:
+                return True
+
+            else:
+                for right in p[1]:
+
+                    if right in t_set and right != "@":
+                        flag = False
+                        break
+
+                    flag_temp = False
+                    if right in n_set:
+                        flag_temp = can_be_null(right, production, n_set, t_set)
+
+                    flag &= flag_temp
+
+                if flag:
+                    continue
+                else:
+                    break
+
+    return flag
 
 
 def get_first_set(t_symbol_set, n_symbol_set, production):
@@ -14,9 +48,6 @@ def get_first_set(t_symbol_set, n_symbol_set, production):
             if p[0] == symbol:  # p[0]找到了对应的产生式 p[0] -> Y1Y2
                 # X是非终结符，且有产生式X → Y1 Y2…… Yk
 
-                # print("symbol", end=": ")
-                # print(symbol)
-
                 if symbol not in all_first_set.keys():  # 还未创建symbol的first集
                     all_first_set[symbol] = []
 
@@ -24,10 +55,10 @@ def get_first_set(t_symbol_set, n_symbol_set, production):
                     all_first_set[symbol].append(p[1][0])
 
                 elif p[1][0] in n_symbol_set:  # Y1是非终结符,将FIRST(Y1)–ε中的所有符号加入到FIRST(X)
-                    if p[1][0] not in all_first_set.keys():  # 还未创建需要加入的的first集
-                        if [symbol, p[1][0]] not in remain_add:
-                            remain_add.append([symbol, p[1][0]])
-                    else:
+                    # 还未创建需要加入的的first集
+                    remain_add.append([symbol, p[1][0]])
+
+                    if p[1][0] in all_first_set.keys():
                         for s in all_first_set[p[1][0]]:
                             if s != "@" and s not in all_first_set[symbol]:
                                 all_first_set[symbol].append(s)
@@ -36,16 +67,14 @@ def get_first_set(t_symbol_set, n_symbol_set, production):
                     all_first_set[p[0]].append("@")
 
                 # 只能是y1，y2等都能推出空才能让最终的推出空
+                flag = 1
                 for i in range(len(p[1])):  # i:Y1 Y2…… Yi-1 →ε,将FIRST(Yi)–ε中的所有符号加入到FIRST(X)
-                    flag = 0
-                    for p2 in production:
-                        if p[1][i] == p2[0] and p2[1][0] == "@":
-                            flag = 1
-                            break
+                    temp_symbol = p[1][i]
 
-                    if flag == 1:
+                    if can_be_null(temp_symbol, production, n_symbol_set, t_symbol_set):  # 该终结符能推出空
                         continue
-                    elif flag == 0:
+                    else:
+                        flag = 0
 
                         if p[1][i] not in all_first_set.keys():  # 还未创建需要加入的的first集
                             if [symbol, p[1][i]] not in remain_add:
@@ -56,21 +85,26 @@ def get_first_set(t_symbol_set, n_symbol_set, production):
                                     all_first_set[symbol].append(ss)
                         break
 
-                    if flag == 1:  # Y1 Y2…… Yk可推导得到ε,  则将ε加入到FIRST(X)
-                        all_first_set[p[0]].append("@")
+                if flag == 1:  # Y1 Y2…… Yk可推导得到ε,  则将ε加入到FIRST(X)
+                    all_first_set[p[0]].append("@")
 
     # print(all_first_set)
     # print("remaining")
     # print(remain_add)
-
-    for i in range(len(remain_add)):  # 排序，保证添加first集的顺序
-        for j in range(i, len(remain_add)):
-            if remain_add[i][1] == remain_add[j][0]:
-                temp = remain_add[i]
-                remain_add[i] = remain_add[j]
-                remain_add[j] = temp
+    #
+    # for i in range(len(remain_add)):  # 排序，保证添加first集的顺序
+    #     for j in range(i, len(remain_add)):
+    #         if remain_add[i][1] == remain_add[j][0]:
+    #             temp = remain_add[i]
+    #             remain_add[i] = remain_add[j]
+    #             remain_add[j] = temp
 
     for r in remain_add:
+        for t_symbol in all_first_set[r[1]]:
+            if t_symbol != "@" and t_symbol not in all_first_set[r[0]]:
+                all_first_set[r[0]].append(t_symbol)
+
+    for r in reversed(remain_add):
         for t_symbol in all_first_set[r[1]]:
             if t_symbol != "@" and t_symbol not in all_first_set[r[0]]:
                 all_first_set[r[0]].append(t_symbol)
@@ -117,6 +151,14 @@ def get_follow_set(t_symbol_set, n_symbol_set, production, first_set):
         for p in production:
             if p[0] == n:  # 此处n为PPT中A
                 rightside = p[1]
+
+                if len(rightside) == 1:
+                    B = rightside[0]
+                    if B in n_symbol_set:
+                        for follow_symbol in all_follow_set[n]:
+                            if follow_symbol not in all_follow_set[B]:
+                                all_follow_set[B].append(follow_symbol)
+                        remain_add.append([B, n])
 
                 for i in range(len(p[1]) - 1):
                     B = rightside[i]
@@ -183,6 +225,3 @@ def test_follow_set():
 
     return first_set, follow_set, n_set, t_set, production
 
-
-# if __name__ == '__main__':
-#     test_follow_set()
