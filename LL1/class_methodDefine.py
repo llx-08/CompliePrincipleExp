@@ -208,10 +208,10 @@ def grammar_analyse(n_set, t_set, input_symbol_buffer, predict_table, first_set,
             curr_input_index += 1  # 读取下一个输入符号
 
             # grammar tree add node
-            leaf_node = TreeNode(tree_node_id, top_symbol, True)
-            leaf_node.set_father(current_root.id)
-            tree_node_id += 1
-            current_root.add_child(leaf_node)
+            # leaf_node = TreeNode(tree_node_id, top_symbol, True)
+            # leaf_node.set_father(current_root.id)
+            # tree_node_id += 1
+            # current_root.add_child(leaf_node)
 
         elif top_symbol in t_set and top_symbol != input_symbol and top_symbol != "$":
             error_solver(first_set, follow_set, 1, symbol_stack, input_buffer, curr_input_index, curr_line)  # X ≠ a则报错
