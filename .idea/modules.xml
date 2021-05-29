@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/CompliePrincipleExp.iml" filepath="$PROJECT_DIR$/.idea/CompliePrincipleExp.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/exp2_grammarAnalysis.iml" filepath="$PROJECT_DIR$/.idea/exp2_grammarAnalysis.iml" />
     </modules>
   </component>

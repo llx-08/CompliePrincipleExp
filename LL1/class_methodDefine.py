@@ -1,6 +1,4 @@
-from first_follow import *
-from my_tree_plot import *
-from output_temp_result import *
+from LL1.output_temp_result import *
 
 
 class Stack(object):  # 实现栈，后面符号栈需要使用
@@ -59,13 +57,6 @@ def readGrammar():
     return wenfa
 
 
-def readTestCase():
-    lex_analyse_result = []
-
-
-    return lex_analyse_result
-
-
 def get_grammarAndProduction(grammar):
     n_set = []
     t_set = []
@@ -121,6 +112,7 @@ def build_predict_table(n_set, t_set, all_first_set, all_follow_set, production)
                     action_table[A][b] = p
 
     action_table["函数块"]["id"] = ['函数块', ['声明语句闭包', '函数块闭包']]
+    action_table["函数块"]["if"] = ['函数块', ['声明语句闭包', '函数块闭包']]
 
     return action_table
 
@@ -170,12 +162,12 @@ def grammar_analyse(n_set, t_set, input_symbol_buffer, predict_table, first_set,
     symbol_stack.push("程序开始")
 
     # grammar tree init
-    tree_node_id = 0
-    grammar_tree_root = TreeNode(tree_node_id, "程序开始", False)
-    current_root      = grammar_tree_root
+    # tree_node_id = 0
+    # grammar_tree_root = TreeNode(tree_node_id, "程序开始", False)
+    # current_root      = grammar_tree_root
 
-    tree_node_stack = Stack()
-    tree_node_stack.push(grammar_tree_root)
+    # tree_node_stack = Stack()
+    # tree_node_stack.push(grammar_tree_root)
 
     input_buffer = []
     line_buffer  = []
@@ -233,7 +225,7 @@ def grammar_analyse(n_set, t_set, input_symbol_buffer, predict_table, first_set,
                     if r != "@":
                         symbol_stack.push(r)
 
-                current_root = tree_node_stack.pop()
+                # current_root = tree_node_stack.pop()
 
         elif top_symbol == "$" and input_symbol == "$":
             return "Grammar Analyse Success!", used_production

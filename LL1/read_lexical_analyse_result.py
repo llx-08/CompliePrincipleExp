@@ -1,5 +1,4 @@
-from symbol_id import keyword
-from output_temp_result import *
+from LL1.symbol_id import keyword
 
 
 def read_lexical_result():

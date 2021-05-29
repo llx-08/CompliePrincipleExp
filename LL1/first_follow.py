@@ -1,6 +1,5 @@
-import class_methodDefine as cm
 import sys
-from output_temp_result import *
+from LL1.class_methodDefine import *
 
 sys.setrecursionlimit(10000000)
 
@@ -109,6 +108,10 @@ def get_first_set(t_symbol_set, n_symbol_set, production):
             if t_symbol != "@" and t_symbol not in all_first_set[r[0]]:
                 all_first_set[r[0]].append(t_symbol)
 
+    for a in all_first_set["函数块闭包"]:
+        if a not in all_first_set["函数块"]:
+            all_first_set["函数块"].append(a)
+
     return all_first_set
 
 
@@ -124,7 +127,7 @@ def test_first_set():
         ["F", "id"]
     ]
 
-    n_set, t_set, production = cm.get_grammarAndProduction(grammar=grammar)
+    n_set, t_set, production = get_grammarAndProduction(grammar=grammar)
     # print()
 
     first_set = get_first_set(t_set, n_set, production=production)
