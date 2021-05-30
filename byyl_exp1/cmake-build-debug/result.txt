@@ -1,132 +1,115 @@
 ( 2 , - ) curr line : 1
 ( 71 , 1 ) curr line : 1
-( 38 , - ) curr line : 1
-( 68 , 1 ) curr line : 1
+( 63 , - ) curr line : 1
+( 71 , 2 ) curr line : 1
+( 63 , - ) curr line : 1
+( 71 , 3 ) curr line : 1
+( 63 , - ) curr line : 1
+( 71 , 4 ) curr line : 1
 ( 64 , - ) curr line : 1
-( 2 , - ) curr line : 2
-( 71 , 2 ) curr line : 2
+( 29 , - ) curr line : 2
+( 56 , - ) curr line : 2
+( 71 , 5 ) curr line : 2
 ( 63 , - ) curr line : 2
-( 71 , 3 ) curr line : 2
+( 71 , 6 ) curr line : 2
 ( 63 , - ) curr line : 2
-( 71 , 4 ) curr line : 2
+( 71 , 7 ) curr line : 2
+( 34 , - ) curr line : 2
+( 57 , - ) curr line : 2
 ( 64 , - ) curr line : 2
-( 2 , - ) curr line : 3
-( 71 , 5 ) curr line : 3
-( 58 , - ) curr line : 3
-( 68 , 2 ) curr line : 3
-( 59 , - ) curr line : 3
-( 64 , - ) curr line : 3
-( 5 , - ) curr line : 4
-( 36 , - ) curr line : 4
-( 71 , 6 ) curr line : 4
-( 64 , - ) curr line : 4
-( 71 , 7 ) curr line : 5
+( 23 , - ) curr line : 3
+( 56 , - ) curr line : 3
+( 71 , 8 ) curr line : 3
+( 52 , - ) curr line : 3
+( 68 , 1 ) curr line : 3
+( 57 , - ) curr line : 3
+( 60 , - ) curr line : 4
+( 71 , 9 ) curr line : 5
 ( 38 , - ) curr line : 5
-( 68 , 3 ) curr line : 5
+( 71 , 10 ) curr line : 5
+( 34 , - ) curr line : 5
+( 71 , 11 ) curr line : 5
 ( 64 , - ) curr line : 5
-( 71 , 8 ) curr line : 6
-( 38 , - ) curr line : 6
-( 68 , 4 ) curr line : 6
+( 64 , - ) curr line : 5
+( 61 , - ) curr line : 6
 ( 64 , - ) curr line : 6
-( 71 , 9 ) curr line : 7
-( 38 , - ) curr line : 7
-( 68 , 5 ) curr line : 7
-( 64 , - ) curr line : 7
-( 71 , 10 ) curr line : 8
-( 38 , - ) curr line : 8
-( 68 , 6 ) curr line : 8
-( 64 , - ) curr line : 8
-( 19 , - ) curr line : 9
-( 56 , - ) curr line : 9
-( 71 , 11 ) curr line : 9
-( 39 , - ) curr line : 9
-( 68 , 7 ) curr line : 9
-( 57 , - ) curr line : 9
-( 60 , - ) curr line : 10
+( 23 , - ) curr line : 7
+( 56 , - ) curr line : 7
+( 71 , 12 ) curr line : 7
+( 52 , - ) curr line : 7
+( 68 , 2 ) curr line : 7
+( 57 , - ) curr line : 7
+( 60 , - ) curr line : 8
+( 71 , 13 ) curr line : 9
+( 38 , - ) curr line : 9
+( 71 , 14 ) curr line : 9
+( 35 , - ) curr line : 9
+( 71 , 15 ) curr line : 9
+( 61 , - ) curr line : 10
+( 64 , - ) curr line : 10
 ( 23 , - ) curr line : 11
 ( 56 , - ) curr line : 11
-( 71 , 12 ) curr line : 11
+( 71 , 16 ) curr line : 11
 ( 52 , - ) curr line : 11
-( 68 , 8 ) curr line : 11
+( 68 , 3 ) curr line : 11
 ( 57 , - ) curr line : 11
 ( 60 , - ) curr line : 12
-( 71 , 13 ) curr line : 13
+( 71 , 17 ) curr line : 13
 ( 38 , - ) curr line : 13
-( 71 , 14 ) curr line : 13
+( 71 , 18 ) curr line : 13
+( 41 , - ) curr line : 13
+( 71 , 19 ) curr line : 13
 ( 64 , - ) curr line : 13
 ( 61 , - ) curr line : 14
-( 24 , - ) curr line : 14
-( 23 , - ) curr line : 14
-( 56 , - ) curr line : 14
-( 71 , 15 ) curr line : 14
-( 52 , - ) curr line : 14
-( 68 , 9 ) curr line : 14
-( 57 , - ) curr line : 14
-( 60 , - ) curr line : 15
-( 71 , 16 ) curr line : 16
-( 38 , - ) curr line : 16
-( 71 , 17 ) curr line : 16
-( 64 , - ) curr line : 16
-( 61 , - ) curr line : 17
-( 24 , - ) curr line : 17
-( 60 , - ) curr line : 18
-( 71 , 18 ) curr line : 19
-( 38 , - ) curr line : 19
-( 71 , 19 ) curr line : 19
+( 64 , - ) curr line : 14
+( 23 , - ) curr line : 15
+( 56 , - ) curr line : 15
+( 71 , 20 ) curr line : 15
+( 52 , - ) curr line : 15
+( 68 , 4 ) curr line : 15
+( 57 , - ) curr line : 15
+( 60 , - ) curr line : 16
+( 71 , 21 ) curr line : 17
+( 38 , - ) curr line : 17
+( 71 , 22 ) curr line : 17
+( 42 , - ) curr line : 17
+( 71 , 23 ) curr line : 17
+( 64 , - ) curr line : 17
+( 61 , - ) curr line : 18
+( 64 , - ) curr line : 18
+( 30 , - ) curr line : 19
+( 56 , - ) curr line : 19
+( 71 , 24 ) curr line : 19
+( 57 , - ) curr line : 19
 ( 64 , - ) curr line : 19
-( 61 , - ) curr line : 20
-( 64 , - ) curr line : 20
-( 30 , - ) curr line : 21
-( 56 , - ) curr line : 21
-( 71 , 20 ) curr line : 21
-( 57 , - ) curr line : 21
-( 64 , - ) curr line : 21
-( 29 , - ) curr line : 22
-( 56 , - ) curr line : 22
-( 71 , 21 ) curr line : 22
-( 57 , - ) curr line : 22
-( 64 , - ) curr line : 22
-( 61 , - ) curr line : 23
-( 64 , - ) curr line : 23
 
 ====================================Statistics Data====================================
-Total Lines: 24
-Total Words: 90
-Total characters: 266
+Total Lines: 20
+Total Words: 84
+Total characters: 185
 Total Errors: 0
 ====================================Each Word Count====================================
+Word: | Count: 1
+Word: ; Count: 11
+Word: 3 Count: 1
+Word: = Count: 4
+Word: ans Count: 6
 Word: get Count: 1
-Word: 2 Count: 1
-Word: } Count: 4
-Word: if Count: 2
-Word: { Count: 4
-Word: ( Count: 5
-Word: , Count: 2
-Word: ) Count: 5
-Word: ] Count: 1
-Word: num1 Count: 3
-Word: put Count: 1
-Word: int Count: 3
-Word: ; Count: 15
-Word: = Count: 8
-Word: testArray Count: 1
-Word: 100 Count: 1
-Word: 0 Count: 1
-Word: * Count: 1
-Word: 10 Count: 1
-Word: num0 Count: 1
-Word: char Count: 1
-Word: out Count: 5
-Word: [ Count: 1
-Word: 9999 Count: 1
-Word: str Count: 1
-Word: > Count: 1
-Word: while Count: 1
-Word: 3333 Count: 1
-Word: == Count: 2
-Word: num2 Count: 2
-Word: 6666 Count: 1
-Word: else Count: 2
+Word: + Count: 2
 Word: op Count: 6
-Word: num3 Count: 2
-Word: 1 Count: 2
+Word: , Count: 5
+Word: num1 Count: 6
+Word: put Count: 1
+Word: int Count: 1
+Word: ( Count: 6
+Word: ) Count: 6
+Word: 1 Count: 1
+Word: == Count: 4
+Word: num2 Count: 6
+Word: { Count: 4
+Word: if Count: 4
+Word: 0 Count: 1
+Word: } Count: 4
+Word: - Count: 1
+Word: 2 Count: 1
+Word: & Count: 1

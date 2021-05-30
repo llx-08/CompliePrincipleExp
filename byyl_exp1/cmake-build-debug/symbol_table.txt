@@ -1,36 +1,34 @@
 Const Table:
-1 10 : Code: 68
-2 100 : Code: 68
-3 3333 : Code: 68
-4 6666 : Code: 68
-5 9999 : Code: 68
-6 1 : Code: 68
-7 0 : Code: 68
-8 1 : Code: 68
-9 2 : Code: 68
+1 0 : Code: 68
+2 1 : Code: 68
+3 2 : Code: 68
+4 3 : Code: 68
 
 Identifier Table:
-1 Name : op
-2 Name : num3
-3 Name : num2
-4 Name : num1
-5 Name : str
-6 Name : testArray
+1 Name : num1
+2 Name : ans
+3 Name : op
+4 Name : num2
+5 Name : num1
+6 Name : ans
 7 Name : op
-8 Name : out
+8 Name : num2
 9 Name : num1
-10 Name : num0
+10 Name : ans
 11 Name : op
-12 Name : op
-13 Name : out
-14 Name : num1
+12 Name : num2
+13 Name : num1
+14 Name : num2
 15 Name : op
-16 Name : out
-17 Name : num2
-18 Name : out
-19 Name : num3
-20 Name : out
-21 Name : op
+16 Name : ans
+17 Name : num1
+18 Name : num2
+19 Name : op
+20 Name : op
+21 Name : ans
+22 Name : num1
+23 Name : num2
+24 Name : ans
 
 Error Table:
 

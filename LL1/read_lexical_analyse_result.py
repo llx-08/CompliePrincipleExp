@@ -51,6 +51,7 @@ def read_symbol_table():
         line = symbol_table.readline()
 
     symbol_table.close()
+
     return const_table_list, identifier_table_list
 
 
@@ -66,7 +67,11 @@ def replaceID_WithSymbol(lexical_result_list, const_table_list, identifier_table
         elif l[0] == "68":  # 常量
             new_lr_list.append([keyword[int(l[0])], l[2]])
         elif l[0] == "71":  # 变量
-            new_lr_list.append([keyword[int(l[0])], l[2]])
+            # print(identifier_table_list[int(l[1])-1])
+            if identifier_table_list[int(l[1])-1][1] == "elif":
+                new_lr_list.append(["elif",  l[2]])
+            else:
+                new_lr_list.append([keyword[int(l[0])], l[2]])
 
     return new_lr_list
 
@@ -75,18 +80,18 @@ def read_test():
     lexical_res = read_lexical_result()
     c, i = read_symbol_table()
 
-    for i in range(len(lexical_res)):
-        if i % 5 == 0:
-            print()
-        print(lexical_res[i], end="  ")
+    # for ii in range(len(lexical_res)):
+    #     if ii % 5 == 0:
+    #         print()
+    #     print(lexical_res[ii], end="  ")
 
-    print("\nconst:")
-    print(c)
-    print("symbol")
-    print(i)
+    # print("\nconst:")
+    # print(c)
+    # print("symbol")
+    # print(i)
 
     new_lr = replaceID_WithSymbol(lexical_res, c, i)
-    print(new_lr)
+    # print(new_lr)
 
 
 read_test()
