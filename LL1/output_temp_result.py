@@ -129,69 +129,69 @@ def print_test(grammar, n_set, t_set, first_set, follow_set, action_table, produ
     print_action_table(action_table, t_set, n_set, production)
 
 
-def loop_build_subtree(used_production, t_set, n_set, curr_index, right_index):
-    subtree_val = used_production[curr_index][right_index]
-    print("sub tree val: ")
-    print(subtree_val)
-
-    temp_tree_node = treeNode()
-
-    if subtree_val in t_set or subtree_val == "@":
-        print("?")
-        temp_tree_node.node_assign(subtree_val)
-
-    elif subtree_val in n_set:
-        curr_index += 1
-        for next_right_index in range(len(used_production[curr_index][1])):
-            temp_tree_node.add_child(loop_build_subtree(used_production, t_set, n_set, curr_index, right_index))
-
-    return temp_tree_node
-
-
-# 用顺序排列的产生式转为语法树
-def build_grammar_tree(used_production, t_set, n_set):
-    root = treeNode()
-    root.node_assign(used_production[0][0])
-    curr_index = 0
-
-    for right_index in range(len(used_production[curr_index][1])):
-        curr_index += 1
-        print("index: ", end="")
-        print(curr_index)
-        root.add_child(loop_build_subtree(used_production, t_set, n_set, curr_index, right_index))
-
-    return root
-
-
-def print_tree(root, t_set, n_set):  # 从根节点打印语法树
-    if root.val in t_set:
-        print(root.val)
-        return
-    elif root.val in n_set:
-        print(root.val, end=" —————— ")
-
-    for child in root.child_node:
-        print_tree(child, t_set, n_set)
-
-
-def createTree(dataSet, labels,featLabels):
-    classList = [example[-1] for example in dataSet]  # 取分类标签（是否出去玩：yes or no）
-    if classList.count(classList[0]) == len(classList):# 如果类别完全相同则停止继续划分
-        return classList[0]
-    if len(dataSet[0]) == 1:                          # 遍历完所有特征时返回出现次数最多的类标签
-        return majorityCnt(classList)
-    bestFeat = ChoosebestSplitData(dataSet)           # 选择最优特征
-    bestFeatLabel = labels[bestFeat]                  # 最优特征的标签
-    featLabels.append(bestFeatLabel)
-    myTree = {bestFeatLabel: {}}                      # 根据最优特征的标签生成树
-                                                      # 删除已经使用的特征标签
-                                                      # 得到训练集中所有最优解特征的属性值
-    featValues = [example[bestFeat] for example in dataSet]
-    uniqueVals = set(featValues)                      # 去掉重复的属性值
-    for value in uniqueVals:                          # 遍历特征，创建决策树
-        del_bestFeat = bestFeat
-        del_labels = labels[bestFeat]
-        del (labels[bestFeat])
-        myTree[bestFeatLabel][value] = createTree(SplitData(dataSet, bestFeat, value), labels, featLabels)
-        labels.insert(del_bestFeat, del_labels)
-    return myTree
+# def loop_build_subtree(used_production, t_set, n_set, curr_index, right_index):
+#     subtree_val = used_production[curr_index][right_index]
+#     print("sub tree val: ")
+#     print(subtree_val)
+#
+#     temp_tree_node = treeNode()
+#
+#     if subtree_val in t_set or subtree_val == "@":
+#         print("?")
+#         temp_tree_node.node_assign(subtree_val)
+#
+#     elif subtree_val in n_set:
+#         curr_index += 1
+#         for next_right_index in range(len(used_production[curr_index][1])):
+#             temp_tree_node.add_child(loop_build_subtree(used_production, t_set, n_set, curr_index, right_index))
+#
+#     return temp_tree_node
+#
+#
+# # 用顺序排列的产生式转为语法树
+# def build_grammar_tree(used_production, t_set, n_set):
+#     root = treeNode()
+#     root.node_assign(used_production[0][0])
+#     curr_index = 0
+#
+#     for right_index in range(len(used_production[curr_index][1])):
+#         curr_index += 1
+#         print("index: ", end="")
+#         print(curr_index)
+#         root.add_child(loop_build_subtree(used_production, t_set, n_set, curr_index, right_index))
+#
+#     return root
+#
+#
+# def print_tree(root, t_set, n_set):  # 从根节点打印语法树
+#     if root.val in t_set:
+#         print(root.val)
+#         return
+#     elif root.val in n_set:
+#         print(root.val, end=" —————— ")
+#
+#     for child in root.child_node:
+#         print_tree(child, t_set, n_set)
+#
+#
+# def createTree(dataSet, labels,featLabels):
+#     classList = [example[-1] for example in dataSet]  # 取分类标签（是否出去玩：yes or no）
+#     if classList.count(classList[0]) == len(classList):# 如果类别完全相同则停止继续划分
+#         return classList[0]
+#     if len(dataSet[0]) == 1:                          # 遍历完所有特征时返回出现次数最多的类标签
+#         return majorityCnt(classList)
+#     bestFeat = ChoosebestSplitData(dataSet)           # 选择最优特征
+#     bestFeatLabel = labels[bestFeat]                  # 最优特征的标签
+#     featLabels.append(bestFeatLabel)
+#     myTree = {bestFeatLabel: {}}                      # 根据最优特征的标签生成树
+#                                                       # 删除已经使用的特征标签
+#                                                       # 得到训练集中所有最优解特征的属性值
+#     featValues = [example[bestFeat] for example in dataSet]
+#     uniqueVals = set(featValues)                      # 去掉重复的属性值
+#     for value in uniqueVals:                          # 遍历特征，创建决策树
+#         del_bestFeat = bestFeat
+#         del_labels = labels[bestFeat]
+#         del (labels[bestFeat])
+#         myTree[bestFeatLabel][value] = createTree(SplitData(dataSet, bestFeat, value), labels, featLabels)
+#         labels.insert(del_bestFeat, del_labels)
+#     return myTree

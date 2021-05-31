@@ -43,8 +43,9 @@
 ( 71 , 13 ) curr line : 9
 ( 38 , - ) curr line : 9
 ( 71 , 14 ) curr line : 9
-( 35 , - ) curr line : 9
+( 46 , - ) curr line : 9
 ( 71 , 15 ) curr line : 9
+( 64 , - ) curr line : 9
 ( 61 , - ) curr line : 10
 ( 64 , - ) curr line : 10
 ( 23 , - ) curr line : 11
@@ -75,7 +76,6 @@
 ( 42 , - ) curr line : 17
 ( 71 , 23 ) curr line : 17
 ( 64 , - ) curr line : 17
-( 61 , - ) curr line : 18
 ( 64 , - ) curr line : 18
 ( 30 , - ) curr line : 19
 ( 56 , - ) curr line : 19
@@ -84,13 +84,13 @@
 ( 64 , - ) curr line : 19
 
 ====================================Statistics Data====================================
-Total Lines: 20
+Total Lines: 21
 Total Words: 84
-Total characters: 185
+Total characters: 186
 Total Errors: 0
 ====================================Each Word Count====================================
 Word: | Count: 1
-Word: ; Count: 11
+Word: ; Count: 12
 Word: 3 Count: 1
 Word: = Count: 4
 Word: ans Count: 6
@@ -104,12 +104,12 @@ Word: int Count: 1
 Word: ( Count: 6
 Word: ) Count: 6
 Word: 1 Count: 1
+Word: -- Count: 1
 Word: == Count: 4
 Word: num2 Count: 6
 Word: { Count: 4
 Word: if Count: 4
 Word: 0 Count: 1
-Word: } Count: 4
-Word: - Count: 1
+Word: } Count: 3
 Word: 2 Count: 1
 Word: & Count: 1

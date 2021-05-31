@@ -5,7 +5,7 @@ sys.setrecursionlimit(10000000)
 
 
 def can_be_null(symbol, production, n_set, t_set):
-    print("symbol: ", end="")
+    print("symbol:can_be_null ", end="")
     print(symbol)
     flag = False
     for p in production:
@@ -53,7 +53,8 @@ def get_first_set(t_symbol_set, n_symbol_set, production):
                 if p[1][0] in t_symbol_set:  # Y1是终结符,将Y1加入到FIRST(X)
                     all_first_set[symbol].append(p[1][0])
 
-                elif p[1][0] in n_symbol_set:  # Y1是非终结符,将FIRST(Y1)–ε中的所有符号加入到FIRST(X)
+                elif p[1][0] in n_symbol_set:
+                    # Y1是非终结符,将FIRST(Y1)–ε中的所有符号加入到FIRST(X)
                     # 还未创建需要加入的的first集
                     remain_add.append([symbol, p[1][0]])
 
@@ -144,11 +145,10 @@ def get_follow_set(t_symbol_set, n_symbol_set, production, first_set):
 
     remain_add = []  # 在最后将所有符号重新加入: 被添加，添加来源
 
-    # for t in t_symbol_set:
-    #     all_follow_set[t] = ["@"]
-
     for n in n_symbol_set:
-        all_follow_set[n] = ["$"]
+        all_follow_set[n] = []
+
+    all_follow_set["程序开始"].append("$")
 
     for n in n_symbol_set:
         for p in production:
@@ -176,22 +176,9 @@ def get_follow_set(t_symbol_set, n_symbol_set, production, first_set):
 
                         remain_add.append([beta, n])
 
-                        # print("new beta")
-                        # print(all_follow_set[beta])
-
                         if B in n_symbol_set:
-                            # print("in B")
-                            # print(B)
                             for pro in production:  # A→αBβ且β→ε
-                                # print("NULL TEST OUTER LOOP")
-                                # print(pro[0], end=" -> ")
-                                # print(pro[1])
-
                                 if pro[0] == beta and pro[1][0] == "@":
-                                    # print("NULL TEST")
-                                    # print(pro[0])
-                                    # print(pro[1])
-
                                     remain_add.append([B, n])
 
                                     for f_a in all_follow_set[n]:
@@ -206,7 +193,6 @@ def get_follow_set(t_symbol_set, n_symbol_set, production, first_set):
                             if first_symbol not in all_follow_set[B] and first_symbol != "@":
                                 all_follow_set[B].append(first_symbol)
 
-    # print(remain_add)
     for i in range(len(remain_add)):
         for re in reversed(remain_add):
             for f_symbol in all_follow_set[re[1]]:

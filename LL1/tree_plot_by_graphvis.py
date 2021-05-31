@@ -46,20 +46,13 @@ def build_tree_struct(used_production, n_set, t_set):
 
 
 def build_tree(used_production, pro_ind, root, n_set, t_set):
-    # print("pro index := ", end="")
-    # print(pro_ind)
-    # print("root value := ", end="")
-    # print(root.value)
+
     right = used_production[pro_ind][1]
-    # print(right)
+
     new_ind = pro_ind + 1
     for r in right:
-        # print("     curr r := ", end="")
-        # print(r)
 
         if r in t_set:
-            # print("     t set:", end="")
-            # print(r)
             root.add_child(TreeNode(r, True))
 
         else:
