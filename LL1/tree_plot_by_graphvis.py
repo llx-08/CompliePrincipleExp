@@ -128,6 +128,8 @@ def tree_plot(used_production, n_set, t_set):
     root = build_tree_struct(used_production, n_set, t_set)
     write_in_dotfile(root)
 
+    return root
+
 
 # if __name__ == '__main__':
 #     tree_plot(used_production, n_set, t_set)
