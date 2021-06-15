@@ -1,6 +1,6 @@
-from class_methodDefine import *
-from first_follow import *
-from read_lexical_analyse_result import *
+from LL1.class_methodDefine import *
+from LL1.first_follow import *
+from LL1.read_lexical_analyse_result import *
 import xlwt
 
 

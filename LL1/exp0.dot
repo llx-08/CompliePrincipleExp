@@ -1,0 +1,4 @@
+digraph grammar_tree {
+    "0" [label="digit Value: 1
+Move: digit.val=lexval"];
+}

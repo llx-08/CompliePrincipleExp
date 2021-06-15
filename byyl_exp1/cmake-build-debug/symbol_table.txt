@@ -1,34 +1,25 @@
 Const Table:
-1 0 : Code: 68
-2 1 : Code: 68
-3 2 : Code: 68
-4 3 : Code: 68
+1 1 : Code: 68
+2 2 : Code: 68
+3 1 : Code: 68
+4 10 : Code: 68
 
 Identifier Table:
-1 Name : num1
-2 Name : ans
-3 Name : op
-4 Name : num2
-5 Name : num1
-6 Name : ans
-7 Name : op
-8 Name : num2
-9 Name : num1
-10 Name : ans
-11 Name : op
-12 Name : num2
-13 Name : num1
-14 Name : num2
-15 Name : op
-16 Name : ans
-17 Name : num1
-18 Name : num2
-19 Name : op
-20 Name : op
-21 Name : ans
-22 Name : num1
-23 Name : num2
-24 Name : ans
+1 Name : num2
+2 Name : num1
+3 Name : a
+4 Name : a
+5 Name : a
+6 Name : num2
+7 Name : num1
+8 Name : a
+9 Name : num2
+10 Name : num1
+11 Name : bool
+12 Name : c
+13 Name : b
+14 Name : a
+15 Name : c
 
 Error Table:
 

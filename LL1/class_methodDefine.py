@@ -1,4 +1,6 @@
 from LL1.output_temp_result import *
+from semantic.build_symbol_table import *
+from semantic.semantic_analysis import *
 
 
 class Stack(object):  # 实现栈，后面符号栈需要使用
@@ -146,16 +148,26 @@ def error_solver(first_set, follow_set, type, symbol_stack,
         print("分析表中此格为空")
     print("Current Symbol:", end=" ")
     print(A)
+
+    if A == ')':
+        print("丢失右部括号")
+    elif A == '(':
+        print("丢失左部括号")
+    elif A in operator_list:
+        print("丢失运算符")
+    elif A == 'id':
+        print("丢失操作数")
+
     print("Current Input :", end=" ")
     print(input_buffer[curr_input_index])
     print("Current Line :", end="")
     print(curr_line)
 
     if type == 1:  # 栈顶的终结符与当前输入符不匹配
-
         print("Pop Symbol Stack Top: ", end="")
         print(symbol_stack.top())
         symbol_stack.pop()
+
     elif type == 2:  # 栈顶为非终结符A，面临的输入符为a，但分析表中M[A,a]为空
         follow_set_A = follow_set[A]
         next_input_index = curr_input_index
@@ -171,6 +183,57 @@ def error_solver(first_set, follow_set, type, symbol_stack,
         return next_input_index
 
     # raise Exception("ERROR")
+
+
+# 依次按顺序读入，
+# 读到数字：直接输出；
+# 读到一般运算符：如果栈顶的运算符优先级不低于该运算符，则输出栈顶运算符并使之出栈，
+# 直到栈空或不满足上述条件为止；然后入栈；
+# 读到左括号：直接入栈；
+# 读到右括号：输出栈顶运算符并使之出栈，直到栈顶为左括号为止；令左括号出栈。
+# 当读入完毕时，依次输出并弹出栈顶运算符，直到栈被清空。
+def shuntingYardAlgor(expression):
+    Pri = {'*': 2, '/': 2, '+': 1, '-': 1}  # 制定优先级
+
+    operator_stack = Stack()
+    postfix_result = []
+
+    for e in expression:
+        print(e)
+        if e in Pri.keys():
+            if operator_stack.is_empty():
+                operator_stack.push(e)
+
+            elif Pri[e] >= Pri[operator_stack.top()]:
+
+                while operator_stack.top() is not None and Pri[e] <= Pri[operator_stack.top()]:
+                    top_operator = operator_stack.top()
+                    postfix_result.append(top_operator)
+                    operator_stack.pop()
+                    if operator_stack.top() is None:
+                        break
+
+                operator_stack.push(e)
+
+        elif e == '(':
+            operator_stack.push(e)
+        elif e == ')':
+            while operator_stack.top() != '(':
+                top_operator = operator_stack.top()
+                postfix_result.append(top_operator)
+
+            top_operator = operator_stack.top()
+            postfix_result.append(top_operator)
+
+        elif e == 'digit' or e == 'id':
+            postfix_result.append(e)
+
+    while operator_stack.top() is not None:
+        top_operator = operator_stack.top()
+        postfix_result.append(top_operator)
+        operator_stack.pop()
+
+    return postfix_result
 
 
 def grammar_analyse(n_set, t_set, input_symbol_buffer, predict_table, first_set, follow_set):
@@ -192,7 +255,20 @@ def grammar_analyse(n_set, t_set, input_symbol_buffer, predict_table, first_set,
     line_buffer.append("$")
 
     curr_input_index = 0
-    # 补一个判断语句
+
+    # 符号表参数
+    id_count = 1
+    digit_count = 1
+    s_dict = {}
+    scope = 0
+    in_def = False
+    symbol_type = None
+
+    is_expression = False
+    prev_id = None
+    dot_count = 0
+    exp_value = 0
+
     while curr_input_index < len(input_buffer):
 
         input_symbol = input_buffer[curr_input_index]
@@ -204,22 +280,72 @@ def grammar_analyse(n_set, t_set, input_symbol_buffer, predict_table, first_set,
         print(curr_line)
 
         symbol_stack.check_element()
-
         top_symbol = symbol_stack.top()
 
         # 如果X是终结符，且X=a≠＄
         if top_symbol in t_set and top_symbol == input_symbol and top_symbol != "$":
+
+            if input_symbol in type_list:
+                symbol_type = input_symbol
+                in_def = True
+            elif input_symbol == ';':
+                in_def = False
+            elif input_symbol == '=':  # 赋值语句，后面可能跟表达式或单个值，进行语法制导翻译
+                is_expression = True
+                temp_index = curr_input_index + 1
+                expression = []
+
+                while input_buffer[temp_index] != ';':
+                    expression.append(input_buffer[temp_index])
+                    temp_index += 1
+
+                posix_exp = shuntingYardAlgor(expression)  # 转为后缀表达式
+                print("posix")
+                print(posix_exp)
+
+                print_symbol_table(s_dict)
+                root = build_parse_tree_by_posix(posix_exp, i_dict, id_count, c_dict, digit_count, s_dict)
+                expression_tree_write_in_dotfile(root, 'exp'+str(dot_count))
+
+                exp_value = root.value
+
+                dot_count += 1
+            elif input_symbol == 'digit':
+                digit_count += 1
+
             symbol_stack.pop()  # X出栈
+
+            # 读取下一个输入符号时，判断符号表是否需要更新
+            s_dict, scope, id_count, digit_count, prev_id = createSymbolTable(
+                id_count,
+                digit_count,
+                s_dict,
+                scope,
+                curr_input_index,
+                in_def,
+                curr_line,
+                symbol_type,
+                prev_id,
+                is_expression,
+                exp_value
+            )
+            is_expression = False
             curr_input_index += 1  # 读取下一个输入符号
 
         elif top_symbol in t_set and top_symbol != input_symbol and top_symbol != "$":
             error_solver(first_set, follow_set, 1, symbol_stack, input_buffer, curr_input_index, curr_line)  # X ≠ a则报错
 
         elif top_symbol in n_set:  # X是非终结符，查M[X，a]表
-            # if input_symbol not in predict_table[top_symbol].keys() or \
+
             if input_symbol not in predict_table[top_symbol].keys() or \
                     predict_table[top_symbol][input_symbol] == "ERR":  # 若M[X，a]=error，则报错
-                curr_input_index = error_solver(first_set, follow_set, 2, symbol_stack, input_buffer, curr_input_index,
+
+                curr_input_index = error_solver(first_set,
+                                                follow_set,
+                                                2,
+                                                symbol_stack,
+                                                input_buffer,
+                                                curr_input_index,
                                                 curr_line)
 
             elif len(predict_table[top_symbol][input_symbol]) == 2:  # 有产生式，非空
@@ -237,10 +363,17 @@ def grammar_analyse(n_set, t_set, input_symbol_buffer, predict_table, first_set,
                 # current_root = tree_node_stack.pop()
 
         elif top_symbol == "$" and input_symbol == "$":
+            print("语法分析结束时符号表为：")
+            print_symbol_table(s_dict)
             return "Grammar Analyse Success!", used_production
 
         else:
-            curr_input_index = error_solver(first_set, follow_set, 2, symbol_stack, input_buffer, curr_input_index,
+            curr_input_index = error_solver(first_set,
+                                            follow_set,
+                                            2,
+                                            symbol_stack,
+                                            input_buffer,
+                                            curr_input_index,
                                             curr_line)
 
 
@@ -251,3 +384,6 @@ def test_grammar_analyse(n_set, t_set, input_buffer, predict_table, first_set, f
         print(u)
 
     return used_production
+
+
+# print(shuntingYardAlgor(['id', '+', 'id', '-', 'id', '+', 'id']))

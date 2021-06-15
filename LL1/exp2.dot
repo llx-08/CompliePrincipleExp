@@ -1,0 +1,10 @@
+digraph grammar_tree {
+    "0" [label="* Val: 2
+Move: node.val=left.val*right.val"];
+    "1" [label="id Val: 1
+Move: addtype(id.entry)"];
+    "2" [label="id Val: 2
+Move: addtype(id.entry)"];
+    "0" -> "1";
+    "0" -> "2";
+}

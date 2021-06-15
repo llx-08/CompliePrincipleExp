@@ -1,6 +1,6 @@
-from LL1.class_methodDefine import readGrammar, get_grammarAndProduction, build_predict_table, grammar_analyse
+from LL1.class_methodDefine import *
 from LL1.first_follow import get_first_set, get_follow_set
-from LL1.output_temp_result import print_test
+from LL1.output_temp_result import *
 from LL1.read_lexical_analyse_result import read_symbol_table, replaceID_WithSymbol, read_lexical_result
 from LL1.tree_plot_by_graphvis import *
 
@@ -37,14 +37,14 @@ def grammarAnalysis():
                                            first_set, follow_set)
 
     print(msg)
-
     print("\nUsed Production Output:")
+
     for u in used_production:
         print(u)
 
     tree_root = tree_plot(used_production, n_set, t_set)
-    return tree_root
+    return tree_root, used_production
 
 
-# if __name__ == '__main__':
-#     grammarAnalysis()
+if __name__ == '__main__':
+    grammarAnalysis()

@@ -5,10 +5,10 @@ from graphviz import Digraph
 
 class TreeNode:
 
-    def __init__(self, val, is_leaf):
+    def __init__(self, name, is_leaf):
         self.id         = -1
         self.child_list = []
-        self.value      = val
+        self.name       = name
         self.is_leaf    = is_leaf
         self.father     = None
 
@@ -46,6 +46,7 @@ def build_tree_struct(used_production, n_set, t_set):
 
 
 def build_tree(used_production, pro_ind, root, n_set, t_set):
+    # 增添语法制导翻译，在建树的过程中，每次root add_child 后，return前会进行语法制导翻译
 
     right = used_production[pro_ind][1]
 
@@ -87,22 +88,22 @@ def write_in_dotfile(root):
     print("\nTree Nodes Generated:")
     for f in final_nodes:
         print(f.id, end=" ")
-        print(f.value)
+        print(f.name)
 
     print("\nEdge Nodes Generated:")
     for e in final_edges:
         print(e.begin.id, end=" ")
-        print(e.begin.value, end=" -> ")
+        print(e.begin.name, end=" -> ")
 
         print(e.end.id, end=" ")
-        print(e.end.value)
+        print(e.end.name)
 
     content = 'digraph grammar_tree {\n'
     content += 'edge [fontname="SimHei"];\n' \
                'node [shape=box, fontname="SimHei"];'
 
     for node in final_nodes:
-        content += '    "{}" [label="{}"];\n'.format(node.id, node.value)
+        content += '    "{}" [label="{}"];\n'.format(node.id, node.name)
 
     for edge in final_edges:
         start, end = edge.begin, edge.end
